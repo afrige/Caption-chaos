@@ -1,2 +1,22 @@
-# Caption-chaos
-# Caption Chaos v1.0.0  🎮 The first public release of Caption Chaos!  ### Features  * Multiplayer Caption Chaos * Discord OAuth * Discord Rich Presence * Caption Chaos desktop app * Windows installer  ### Windows  Download **Caption Chaos Setup 1.0.0.exe** below and run the installer.  Enjoy Caption Chaos! :D
+helloooo!!!
+!
+
+this is my choicer voicer like game!!
+
+but its multiplayerrr
+
+its still in alpha so expect ALLATA bugs
+
+logo and icon - aru meow
+coding - me
+
+this is a duo project with me and my friend!
+
+make sure to have fun and send us issues in my discord! .imnotluvely.
+
+
+this is purely made for fun and not supposed to be a big project if this is stolen from choicer voicer im really sorry
+
+you can make your custom packs and more!
+
+have fun
