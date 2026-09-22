@@ -1,0 +1,48 @@
+{
+"name": "caption-chaos",
+"version": "1.0.0",
+"description": "Caption Chaos",
+"main": "src/main.js",
+"scripts": {
+"start": "electron .",
+"build": "electron-builder"
+},
+"keywords": [],
+"author": "Nick",
+"license": "MIT",
+"type": "commonjs",
+"devDependencies": {
+"electron": "^44.4.3",
+"electron-builder": "^26.15.3"
+},
+"build": {
+"appId": "com.captionchaos.app",
+"productName": "Caption Chaos",
+"directories": {
+"output": "dist"
+},
+"files": [
+"src/**/*",
+"assets/**/*",
+"icon.ico",
+"package.json"
+],
+"win": {
+"target": [
+{
+"target": "nsis",
+"arch": [
+"x64"
+]
+}
+],
+"icon": "icon.ico"
+},
+"nsis": {
+"oneClick": false,
+"allowToChangeInstallationDirectory": true,
+"createDesktopShortcut": true,
+"createStartMenuShortcut": true
+}
+}
+}

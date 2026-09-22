@@ -1,0 +1,1259 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Caption Chaos</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="scanlines"></div>
+<div class="noise"></div>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<!-- =========================
+     VOICY DIALOGUE
+========================= -->
+
+<div id="dialogue" class="dialogue hidden">
+
+    <div class="dialogue-avatar">
+        <img src="../assets/mascot.png" alt="Voicy">
+        <span class="avatar-status"></span>
+    </div>
+
+    <div class="dialogue-body">
+
+        <div class="dialogue-name">
+            VOICY
+            <span>● ONLINE</span>
+        </div>
+
+        <div id="dialogueText" class="typewriter"></div>
+
+        <div class="dialogue-caret">█</div>
+
+    </div>
+
+    <button id="dialogueSkip" class="dialogue-skip">
+        SKIP
+    </button>
+
+</div>
+
+<!-- =========================
+     TOAST
+========================= -->
+
+<div id="toast" class="toast"></div>
+
+<!-- =========================
+     APPLICATION
+========================= -->
+
+<div class="app">
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="side">
+
+        <div class="brand" data-view="home">
+
+            <div class="brand-logo">
+                <img src="../assets/mascot.png" alt="Voicy">
+            </div>
+
+            <div class="brand-name">
+                <b>CAPTION</b>
+                <strong>CHAOS</strong>
+            </div>
+
+        </div>
+
+        <div class="server-pill">
+            <span class="pulse"></span>
+            PUBLIC BETA
+            <i>1.0</i>
+        </div>
+
+        <!-- Navigation -->
+
+        <nav>
+
+            <button class="nav active" data-view="home">
+
+                <span class="ico">
+                    <img src="../assets/home.png" alt="">
+                </span>
+
+                <div>
+                    <b>Lobby</b>
+                    <small>Home</small>
+                </div>
+
+            </button>
+
+            <button class="nav" data-view="play">
+
+                <span class="ico">
+                    <img src="../assets/play.png" alt="">
+                </span>
+
+                <div>
+                    <b>Play</b>
+                    <small>Start a round</small>
+                </div>
+
+            </button>
+
+            <button class="nav" data-view="packs">
+
+                <span class="ico">
+                    <img src="../assets/studio.png" alt="">
+                </span>
+
+                <div>
+                    <b>Pack Studio</b>
+                    <small>Create a pack</small>
+                </div>
+
+            </button>
+
+            <button class="nav" data-view="mypacks">
+
+                <span class="ico">
+                    <img src="../assets/library.png" alt="">
+                </span>
+
+                <div>
+                    <b>Library</b>
+                    <small>Your packs</small>
+                </div>
+
+            </button>
+
+            <button class="nav" data-view="tutorial">
+
+                <span class="ico">
+                    <img src="../assets/help.png" alt="">
+                </span>
+
+                <div>
+                    <b>How to Play</b>
+                    <small>Learn the rules</small>
+                </div>
+
+            </button>
+
+        </nav>
+
+        <div class="side-spacer"></div>
+
+        <!-- Voicy status -->
+
+        <div class="mini-player">
+
+            <div class="mini-mascot">
+                <img src="../assets/mascot.png" alt="Voicy">
+            </div>
+
+            <div>
+                <b>Voicy is ready</b>
+                <small>Microphone available</small>
+            </div>
+
+            <span class="green-dot"></span>
+
+        </div>
+
+        <!-- Settings -->
+
+        <button class="nav settings" data-view="settings">
+
+            <span class="ico settings-icon">
+                ⚙
+            </span>
+
+            <div>
+                <b>Settings</b>
+                <small>Audio and preferences</small>
+            </div>
+
+        </button>
+
+    </aside>
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="main">
+
+        <!-- TOP BAR -->
+
+        <header class="top">
+
+            <div>
+
+                <div class="crumb">
+                    CAPTION CHAOS
+                    <span>/</span>
+                    <b id="crumb">LOBBY</b>
+                </div>
+
+                <h1 id="pageTitle">
+                    Make the picture speak.
+                </h1>
+
+            </div>
+
+            <div class="top-right">
+
+                <div class="live-pill">
+                    <span></span>
+                    8,421 PLAYERS ONLINE
+                </div>
+
+                <button id="ttsButton" class="tts-button">
+                    VOICY VOICE
+                    <em>ON</em>
+                </button>
+
+                <!-- =========================
+                     DISCORD PROFILE
+                ========================= -->
+
+                <div class="profile" id="discordProfile">
+
+                    <div class="avatar">
+                        <img
+                            id="discordAvatar"
+                            src="../assets/mascot.png"
+                            alt="Discord avatar"
+                        >
+                    </div>
+
+                    <div class="profile-info">
+
+                        <b id="discordDisplayName">
+                            Not connected
+                        </b>
+
+                        <small id="discordUsername">
+                            Connect Discord
+                        </small>
+
+                    </div>
+
+                    <button
+                        id="connectDiscordBtn"
+                        class="discord-connect"
+                        type="button"
+                    >
+                        CONNECT
+                    </button>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =========================
+             HOME
+        ========================= -->
+
+        <section id="home" class="view active">
+
+            <div class="hero">
+
+                <div class="hero-grid"></div>
+
+                <div class="hero-copy">
+
+                    <div class="eyebrow">
+                        <span></span>
+                        THE INTERNET'S WORST CAPTION WINS
+                    </div>
+
+                    <h2>
+                        Say something
+                        <br>
+                        <i>unforgettable.</i>
+                    </h2>
+
+                    <p>
+                        An image appears. You have fifteen seconds to
+                        create the caption that best captures the moment.
+                        Submit your response anonymously and let the room decide.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <button class="btn primary" data-view="play">
+                            PLAY NOW
+                            <span>→</span>
+                        </button>
+
+                        <button class="btn ghost" data-view="tutorial">
+                            MEET VOICY
+                            <span>✦</span>
+                        </button>
+
+                    </div>
+
+                    <div class="hero-stats">
+
+                        <div>
+                            <b>15</b>
+                            <small>SECONDS</small>
+                        </div>
+
+                        <div>
+                            <b>4–8</b>
+                            <small>PLAYERS</small>
+                        </div>
+
+                        <div>
+                            <b>∞</b>
+                            <small>PACKS</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HERO MASCOT -->
+
+                <div class="hero-mascot">
+
+                    <div class="halo"></div>
+
+                    <div class="rings r1"></div>
+                    <div class="rings r2"></div>
+
+                    <img
+                        src="../assets/mascot.png"
+                        alt="Voicy mascot"
+                    >
+
+                    <div class="floating-card fc1">
+                        ✦
+                        <b>ANONYMOUS</b>
+                    </div>
+
+                    <div class="floating-card fc2">
+                        ◉
+                        <b>15 SEC</b>
+                    </div>
+
+                    <div class="hero-speech">
+
+                        <span>...</span>
+
+                        <b>
+                            Your caption is ready.
+                        </b>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMMUNITY -->
+
+            <div class="section-title">
+
+                <div>
+
+                    <span class="eyebrow">
+                        COMMUNITY
+                    </span>
+
+                    <h3>
+                        Featured Packs
+                    </h3>
+
+                </div>
+
+                <button
+                    class="link-btn"
+                    data-view="mypacks"
+                >
+                    VIEW ALL →
+                </button>
+
+            </div>
+
+
+            <div class="packs">
+
+                <article class="pack">
+
+                    <div class="pack-art art1">
+                        <span>◉_◉</span>
+                        <b>
+                            RANDOM
+                            <br>
+                            INTERNET
+                        </b>
+                    </div>
+
+                    <div class="pack-row">
+
+                        <div>
+                            <b>Random Internet</b>
+                            <small>
+                                @gffin • 18 images
+                            </small>
+                        </div>
+
+                        <span>
+                            ♥ 243
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <article class="pack">
+
+                    <div class="pack-art art2">
+
+                        <span>
+                            WHAT.
+                        </span>
+
+                        <b>
+                            WHY DID
+                            <br>
+                            I DO THAT?
+                        </b>
+
+                    </div>
+
+                    <div class="pack-row">
+
+                        <div>
+                            <b>Why Did I Do That?</b>
+
+                            <small>
+                                @pixelmilk • 24 images
+                            </small>
+                        </div>
+
+                        <span>
+                            ♥ 187
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <article class="pack">
+
+                    <div class="pack-art art3">
+
+                        <span>
+                            ◉_◉
+                        </span>
+
+                        <b>
+                            ABSOLUTELY
+                            <br>
+                            NORMAL
+                        </b>
+
+                    </div>
+
+                    <div class="pack-row">
+
+                        <div>
+
+                            <b>
+                                Absolutely Normal
+                            </b>
+
+                            <small>
+                                @moth.exe • 12 images
+                            </small>
+
+                        </div>
+
+                        <span>
+                            ♥ 92
+                        </span>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PLAY
+        ========================= -->
+
+        <section id="play" class="view">
+
+            <div class="game-top">
+
+                <div class="round-chip">
+                    ROUND
+                    <b id="roundNo">01</b>
+                    <span>/ 05</span>
+                </div>
+
+                <div class="room-code">
+
+                    ROOM
+
+                    <b>
+                        CHAOS-7F3
+                    </b>
+
+                    <button>
+                        ⧉
+                    </button>
+
+                </div>
+
+                <div class="players">
+                    ● 4/8 PLAYERS
+                </div>
+
+            </div>
+
+
+            <div class="game">
+
+                <!-- IMAGE -->
+
+                <div class="image-card">
+
+                    <div class="image-top">
+
+                        <span>
+                            CAPTION THIS
+                        </span>
+
+                        <i>
+                            PACK • RANDOM INTERNET
+                        </i>
+
+                    </div>
+
+                    <div class="fake-meme">
+
+                        <div class="meme-glow"></div>
+
+                        <div class="meme-face">
+                            ◉‿◉
+                        </div>
+
+                        <div class="meme-object">
+                            ◆
+                        </div>
+
+                        <div class="meme-caption">
+                            WHEN YOU REALIZE
+                            <br>
+                            THE MIC WAS ON
+                        </div>
+
+                    </div>
+
+                    <div class="prompt-pill">
+                        WHAT IS HAPPENING HERE?
+                    </div>
+
+                </div>
+
+
+                <!-- RECORDING -->
+
+                <div class="record-card">
+
+                    <div class="record-head">
+
+                        <div>
+
+                            <span class="eyebrow">
+                                YOUR TURN
+                            </span>
+
+                            <h3>
+                                Create your caption.
+                            </h3>
+
+                        </div>
+
+                        <div class="big-timer">
+
+                            <b id="timer">
+                                15
+                            </b>
+
+                            <small>
+                                SEC
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <p class="record-help">
+                        Press the button and speak naturally.
+                        Your microphone recording will be saved as your
+                        caption audio. Your recording is not played to the room
+                        during submission.
+                    </p>
+
+
+                    <!-- WAVEFORM -->
+
+                    <div id="wave" class="wave"></div>
+
+
+                    <!-- MICROPHONE STATE -->
+
+                    <div id="micState" class="mic-state">
+
+                        <span></span>
+
+                        MICROPHONE READY
+
+                    </div>
+
+
+                    <!-- RECORD -->
+
+                    <button
+                        id="recordBtn"
+                        class="mic-btn"
+                    >
+
+                        <span>●</span>
+
+                        START RECORDING
+
+                    </button>
+
+
+                    <!-- SUBMIT -->
+
+                    <button
+                        id="submitBtn"
+                        class="btn primary full hidden"
+                    >
+
+                        SUBMIT CAPTION
+
+                        <span>→</span>
+
+                    </button>
+
+
+                    <!-- PREVIEW -->
+
+                    <div
+                        id="captionPreview"
+                        class="caption-preview hidden"
+                    ></div>
+
+
+                    <div class="privacy-note">
+
+                        ✦ YOUR RECORDING IS PRIVATE
+                        •
+                        SUBMISSIONS ARE ANONYMOUS
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             VOTE
+        ========================= -->
+
+        <section id="vote" class="view">
+
+            <div class="vote-head">
+
+                <div>
+
+                    <span class="eyebrow">
+                        THE ROOM HAS SPOKEN
+                    </span>
+
+                    <h2>
+                        Choose the best caption.
+                    </h2>
+
+                    <p>
+                        Listen to each anonymous submission and
+                        select the caption you believe fits the image.
+                    </p>
+
+                </div>
+
+                <div class="vote-clock">
+                    00:45
+                </div>
+
+            </div>
+
+            <div
+                id="submissionList"
+                class="submissions"
+            ></div>
+
+        </section>
+
+
+        <!-- =========================
+             WINNER
+        ========================= -->
+
+        <section id="winner" class="view">
+
+            <div class="winner">
+
+                <div class="burst">
+                    ✦ ✧ ✦ ✧ ✦
+                </div>
+
+                <div class="winner-mascot">
+
+                    <img
+                        src="../assets/mascot.png"
+                        alt="Voicy"
+                    >
+
+                    <div>
+                        ROUND COMPLETE
+                    </div>
+
+                </div>
+
+                <span class="winner-tag">
+                    ROUND WINNER
+                </span>
+
+                <h2 id="winnerText">
+                    "The winning caption will appear here."
+                </h2>
+
+                <p>
+                    Congratulations to the selected submission.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PACK STUDIO
+        ========================= -->
+
+        <section id="packs" class="view">
+
+            <div class="studio">
+
+                <div class="studio-side">
+
+                    <span class="eyebrow">
+                        CREATOR TOOLS
+                    </span>
+
+                    <h2>
+                        Pack Studio
+                    </h2>
+
+                    <p>
+                        Create a custom collection of images
+                        for Caption Chaos.
+                    </p>
+
+                    <div class="studio-steps">
+
+                        <div class="active">
+
+                            <b>
+                                01
+                            </b>
+
+                            <span>
+                                DETAILS
+                            </span>
+
+                        </div>
+
+                        <div>
+
+                            <b>
+                                02
+                            </b>
+
+                            <span>
+                                IMAGES
+                            </span>
+
+                        </div>
+
+                        <div>
+
+                            <b>
+                                03
+                            </b>
+
+                            <span>
+                                PUBLISH
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="studio-main">
+
+                    <label>
+
+                        PACK NAME
+
+                        <input
+                            id="packName"
+                            value="Unhinged Internet"
+                            placeholder="Enter a pack name"
+                        >
+
+                    </label>
+
+
+                    <label>
+
+                        DESCRIPTION
+
+                        <textarea
+                            id="packDescription"
+                            placeholder="Describe your pack..."
+                        >A collection of unusual images for creative captions.</textarea>
+
+                    </label>
+
+
+                    <div class="upload-row">
+
+                        <button class="upload">
+
+                            <span>
+                                ＋
+                            </span>
+
+                            <b>
+                                ADD IMAGE
+                            </b>
+
+                            <small>
+                                PNG / JPG / WEBP
+                            </small>
+
+                        </button>
+
+
+                        <div class="thumbs">
+
+                            <div class="thumb art1">
+                                ◉_◉
+                            </div>
+
+                            <div class="thumb art2">
+                                WHAT.
+                            </div>
+
+                            <div class="thumb art3">
+                                ◉_◉
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="prompt-box">
+
+                        <div>
+
+                            <b>
+                                DEFAULT PROMPT
+                            </b>
+
+                            <small>
+                                What should players be asked?
+                            </small>
+
+                        </div>
+
+                        <input
+                            value="Caption this."
+                        >
+
+                    </div>
+
+
+                    <div class="studio-actions">
+
+                        <button
+                            class="btn ghost"
+                            id="saveDraft"
+                        >
+                            SAVE DRAFT
+                        </button>
+
+                        <button
+                            class="btn primary"
+                            id="publishPack"
+                        >
+                            PUBLISH PACK
+                            ✦
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             LIBRARY
+        ========================= -->
+
+        <section id="mypacks" class="view">
+
+            <div class="library-head">
+
+                <div>
+
+                    <span class="eyebrow">
+                        YOUR CONTENT
+                    </span>
+
+                    <h2>
+                        Pack Library
+                    </h2>
+
+                </div>
+
+                <button
+                    class="btn primary small"
+                    data-view="packs"
+                >
+                    ＋ NEW PACK
+                </button>
+
+            </div>
+
+
+            <div class="library">
+
+                <div class="lib-card">
+
+                    <div class="lib-art art1">
+                        ◉_◉
+                    </div>
+
+                    <div>
+
+                        <b>
+                            Unhinged Internet
+                        </b>
+
+                        <small>
+                            PUBLISHED • 243 plays • 18 images
+                        </small>
+
+                    </div>
+
+                    <button class="btn ghost small">
+                        MANAGE
+                    </button>
+
+                </div>
+
+
+                <div class="lib-card">
+
+                    <div class="lib-art art2">
+                        WHAT.
+                    </div>
+
+                    <div>
+
+                        <b>
+                            Funny Screenshots
+                        </b>
+
+                        <small>
+                            DRAFT • 0 plays • 7 images
+                        </small>
+
+                    </div>
+
+                    <button class="btn ghost small">
+                        EDIT
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             TUTORIAL
+        ========================= -->
+
+        <section id="tutorial" class="view">
+
+            <div class="tutorial">
+
+                <div class="tutorial-visual">
+
+                    <div class="tutorial-orbit"></div>
+
+                    <img
+                        src="../assets/mascot.png"
+                        alt="Voicy"
+                    >
+
+                    <div class="tutorial-dialog">
+
+                        <b>
+                            VOICY
+                        </b>
+
+                        <span id="tutorialLine">
+                            Welcome to Caption Chaos.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="tutorial-content">
+
+                    <span class="eyebrow">
+                        TUTORIAL / 01
+                    </span>
+
+                    <h2>
+                        Meet <i>Voicy.</i>
+                    </h2>
+
+                    <p>
+                        Voicy is the official mascot of Caption Chaos.
+                        Voicy guides players through each round while
+                        keeping the experience clear and engaging.
+                    </p>
+
+
+                    <div class="tutorial-cards">
+
+                        <div>
+
+                            <b>
+                                01
+                            </b>
+
+                            <strong>
+                                SEE
+                            </strong>
+
+                            <span>
+                                An image appears.
+                            </span>
+
+                        </div>
+
+                        <div>
+
+                            <b>
+                                02
+                            </b>
+
+                            <strong>
+                                SPEAK
+                            </strong>
+
+                            <span>
+                                You have fifteen seconds.
+                            </span>
+
+                        </div>
+
+                        <div>
+
+                            <b>
+                                03
+                            </b>
+
+                            <strong>
+                                SUBMIT
+                            </strong>
+
+                            <span>
+                                Your recording is submitted anonymously.
+                            </span>
+
+                        </div>
+
+                        <div>
+
+                            <b>
+                                04
+                            </b>
+
+                            <strong>
+                                VOTE
+                            </strong>
+
+                            <span>
+                                Players select their favorite.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="tutorialNext"
+                        class="btn primary"
+                    >
+                        NEXT LESSON →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SETTINGS
+        ========================= -->
+
+        <section id="settings" class="view">
+
+            <div class="settings">
+
+                <span class="eyebrow">
+                    SYSTEM
+                </span>
+
+                <h2>
+                    Settings
+                </h2>
+
+
+                <div class="setting">
+
+                    <div>
+
+                        <b>
+                            Voicy Voice
+                        </b>
+
+                        <small>
+                            Enable Voicy's original recorded voice.
+                            No text-to-speech processing is used.
+                        </small>
+
+                    </div>
+
+                    <button class="toggle on"></button>
+
+                </div>
+
+
+                <div class="setting">
+
+                    <div>
+
+                        <b>
+                            Animated Interface
+                        </b>
+
+                        <small>
+                            Keep mascot and interface animations enabled.
+                        </small>
+
+                    </div>
+
+                    <button class="toggle on"></button>
+
+                </div>
+
+
+                <div class="setting">
+
+                    <div>
+
+                        <b>
+                            Reduced Motion
+                        </b>
+
+                        <small>
+                            Disable most visual movement.
+                        </small>
+
+                    </div>
+
+                    <button class="toggle"></button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="renderer.js"></script>
+
+</body>
+</html>
