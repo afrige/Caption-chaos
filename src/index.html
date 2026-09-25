@@ -11,682 +11,513 @@
 
 <body>
 
-<div class="scanlines"></div>
-<div class="noise"></div>
+<!-- =========================================================
+     AMBIENT BACKDROP
+========================================================= -->
 
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
+<div class="backdrop">
 
-<!-- =========================
-     VOICY DIALOGUE
-========================= -->
+    <!--
+        Background footage: a monochrome nature loop cut from
+        "Beauty Of Nature | Drone Aerial View" (free stock footage,
+        no copyright). assets/media/hero.mp4 is used when present;
+        hero-fallback.webp is the generated loop and needs no setup.
+    -->
+    <video
+        class="backdrop-media"
+        id="bgVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster="../assets/media/hero-poster.jpg"
+    ></video>
 
-<div id="dialogue" class="dialogue hidden">
+    <img
+        class="backdrop-media"
+        id="bgWebp"
+        src="../assets/media/hero-fallback.webp"
+        alt=""
+    >
 
-    <div class="dialogue-avatar">
-        <img src="../assets/mascot.png" alt="Voicy">
-        <span class="avatar-status"></span>
-    </div>
+    <canvas class="backdrop-fx" id="fx"></canvas>
 
-    <div class="dialogue-body">
-
-        <div class="dialogue-name">
-            VOICY
-            <span>● ONLINE</span>
-        </div>
-
-        <div id="dialogueText" class="typewriter"></div>
-
-        <div class="dialogue-caret">█</div>
-
-    </div>
-
-    <button id="dialogueSkip" class="dialogue-skip">
-        SKIP
-    </button>
+    <div class="backdrop-tint"></div>
+    <div class="backdrop-vignette"></div>
 
 </div>
 
-<!-- =========================
-     TOAST
-========================= -->
 
-<div id="toast" class="toast"></div>
+<!-- =========================================================
+     BOOT / TITLE SCREEN
+========================================================= -->
 
-<!-- =========================
-     APPLICATION
-========================= -->
+<div class="boot" id="boot">
 
-<div class="app">
+    <div class="boot-sky"></div>
+    <div class="boot-sparks" id="bootSparks"></div>
 
-    <!-- =========================
-         SIDEBAR
-    ========================= -->
+    <div class="boot-mascot">
+        <div class="boot-mascot-glow"></div>
+        <img src="../assets/mascot.png" alt="Voicy">
+    </div>
 
-    <aside class="side">
+    <div class="boot-inner">
 
-        <div class="brand" data-view="home">
-
-            <div class="brand-logo">
-                <img src="../assets/mascot.png" alt="Voicy">
-            </div>
-
-            <div class="brand-name">
-                <b>CAPTION</b>
-                <strong>CHAOS</strong>
-            </div>
-
-        </div>
-
-        <div class="server-pill">
-            <span class="pulse"></span>
-            PUBLIC BETA
-            <i>1.0</i>
-        </div>
-
-        <!-- Navigation -->
-
-        <nav>
-
-            <button class="nav active" data-view="home">
-
-                <span class="ico">
-                    <img src="../assets/home.png" alt="">
-                </span>
-
-                <div>
-                    <b>Lobby</b>
-                    <small>Home</small>
-                </div>
-
-            </button>
-
-            <button class="nav" data-view="play">
-
-                <span class="ico">
-                    <img src="../assets/play.png" alt="">
-                </span>
-
-                <div>
-                    <b>Play</b>
-                    <small>Start a round</small>
-                </div>
-
-            </button>
-
-            <button class="nav" data-view="packs">
-
-                <span class="ico">
-                    <img src="../assets/studio.png" alt="">
-                </span>
-
-                <div>
-                    <b>Pack Studio</b>
-                    <small>Create a pack</small>
-                </div>
-
-            </button>
-
-            <button class="nav" data-view="mypacks">
-
-                <span class="ico">
-                    <img src="../assets/library.png" alt="">
-                </span>
-
-                <div>
-                    <b>Library</b>
-                    <small>Your packs</small>
-                </div>
-
-            </button>
-
-            <button class="nav" data-view="tutorial">
-
-                <span class="ico">
-                    <img src="../assets/help.png" alt="">
-                </span>
-
-                <div>
-                    <b>How to Play</b>
-                    <small>Learn the rules</small>
-                </div>
-
-            </button>
-
-        </nav>
-
-        <div class="side-spacer"></div>
-
-        <!-- Voicy status -->
-
-        <div class="mini-player">
-
-            <div class="mini-mascot">
-                <img src="../assets/mascot.png" alt="Voicy">
-            </div>
-
-            <div>
-                <b>Voicy is ready</b>
-                <small>Microphone available</small>
-            </div>
-
-            <span class="green-dot"></span>
-
-        </div>
-
-        <!-- Settings -->
-
-        <button class="nav settings" data-view="settings">
-
-            <span class="ico settings-icon">
-                ⚙
+        <div class="boot-emblem">
+            <span class="boot-emblem-arc a1"></span>
+            <span class="boot-emblem-arc a2"></span>
+            <span class="boot-emblem-arc a3"></span>
+            <span class="boot-emblem-core">
+                <img src="../assets/Icons/favorite.png" alt="">
             </span>
+        </div>
 
-            <div>
-                <b>Settings</b>
-                <small>Audio and preferences</small>
+        <h1 class="boot-title">
+            <span class="boot-title-top">Caption</span>
+            <span class="boot-title-main">Chaos</span>
+        </h1>
+
+        <p class="boot-tag">The internet's worst caption wins.</p>
+
+        <div class="boot-meter">
+            <div class="boot-bar">
+                <i id="bootBar"></i>
+                <span class="boot-bar-shine"></span>
             </div>
+            <div class="boot-meter-foot">
+                <span id="bootStatus">Waking up Voicy</span>
+                <b id="bootPercent">0%</b>
+            </div>
+        </div>
 
+        <ul class="boot-steps" id="bootSteps">
+            <li data-step="0"><i></i>Waking up Voicy</li>
+            <li data-step="1"><i></i>Loading pack library</li>
+            <li data-step="2"><i></i>Tuning microphones</li>
+            <li data-step="3"><i></i>Warming the room</li>
+        </ul>
+
+        <button class="boot-enter" id="bootEnter" type="button">
+            <span>Press start</span>
+            <em>→</em>
         </button>
 
-    </aside>
+        <div class="boot-tip" id="bootTip">
+            <img src="../assets/Icons/questionmark.png" alt="">
+            <span id="bootTipText">Ten seconds is not long. Say it anyway.</span>
+        </div>
 
-    <!-- =========================
-         MAIN
-    ========================= -->
+        <div class="boot-meta">
+            <span>v1.0.0</span>
+            <i>/</i>
+            <span>Public Beta</span>
+            <i>/</i>
+            <span>Windows</span>
+        </div>
 
-    <main class="main">
+    </div>
 
-        <!-- TOP BAR -->
+    <div class="boot-hint" id="bootHint"><kbd>Space</kbd> to continue</div>
 
-        <header class="top">
-
-            <div>
-
-                <div class="crumb">
-                    CAPTION CHAOS
-                    <span>/</span>
-                    <b id="crumb">LOBBY</b>
-                </div>
-
-                <h1 id="pageTitle">
-                    Make the picture speak.
-                </h1>
-
-            </div>
-
-            <div class="top-right">
-
-                <div class="live-pill">
-                    <span></span>
-                    8,421 PLAYERS ONLINE
-                </div>
-
-                <button id="ttsButton" class="tts-button">
-                    VOICY VOICE
-                    <em>ON</em>
-                </button>
-
-                <!-- =========================
-                     DISCORD PROFILE
-                ========================= -->
-
-                <div class="profile" id="discordProfile">
-
-                    <div class="avatar">
-                        <img
-                            id="discordAvatar"
-                            src="../assets/mascot.png"
-                            alt="Discord avatar"
-                        >
-                    </div>
-
-                    <div class="profile-info">
-
-                        <b id="discordDisplayName">
-                            Not connected
-                        </b>
-
-                        <small id="discordUsername">
-                            Connect Discord
-                        </small>
-
-                    </div>
-
-                    <button
-                        id="connectDiscordBtn"
-                        class="discord-connect"
-                        type="button"
-                    >
-                        CONNECT
-                    </button>
-
-                </div>
-
-            </div>
-
-        </header>
+</div>
 
 
-        <!-- =========================
-             HOME
-        ========================= -->
+<!-- =========================================================
+     TOASTS
+========================================================= -->
 
-        <section id="home" class="view active">
-
-            <div class="hero">
-
-                <div class="hero-grid"></div>
-
-                <div class="hero-copy">
-
-                    <div class="eyebrow">
-                        <span></span>
-                        THE INTERNET'S WORST CAPTION WINS
-                    </div>
-
-                    <h2>
-                        Say something
-                        <br>
-                        <i>unforgettable.</i>
-                    </h2>
-
-                    <p>
-                        An image appears. You have fifteen seconds to
-                        create the caption that best captures the moment.
-                        Submit your response anonymously and let the room decide.
-                    </p>
-
-                    <div class="hero-buttons">
-
-                        <button class="btn primary" data-view="play">
-                            PLAY NOW
-                            <span>→</span>
-                        </button>
-
-                        <button class="btn ghost" data-view="tutorial">
-                            MEET VOICY
-                            <span>✦</span>
-                        </button>
-
-                    </div>
-
-                    <div class="hero-stats">
-
-                        <div>
-                            <b>15</b>
-                            <small>SECONDS</small>
-                        </div>
-
-                        <div>
-                            <b>4–8</b>
-                            <small>PLAYERS</small>
-                        </div>
-
-                        <div>
-                            <b>∞</b>
-                            <small>PACKS</small>
-                        </div>
-
-                    </div>
-
-                </div>
+<div class="toast-stack" id="toastStack"></div>
 
 
-                <!-- HERO MASCOT -->
+<!-- =========================================================
+     VOICY DIALOGUE
+========================================================= -->
 
-                <div class="hero-mascot">
+<div id="dialogue" class="dialogue hidden">
 
-                    <div class="halo"></div>
+    <div class="dialogue-portrait">
+        <img src="../assets/mascot.png" alt="Voicy">
+    </div>
 
-                    <div class="rings r1"></div>
-                    <div class="rings r2"></div>
+    <div class="dialogue-body">
+        <div class="dialogue-name">Voicy <span class="dot"></span></div>
+        <div id="dialogueText" class="typewriter"></div>
+    </div>
 
-                    <img
-                        src="../assets/mascot.png"
-                        alt="Voicy mascot"
-                    >
+    <button id="dialogueSkip" class="dialogue-skip" type="button">Skip</button>
 
-                    <div class="floating-card fc1">
-                        ✦
-                        <b>ANONYMOUS</b>
-                    </div>
-
-                    <div class="floating-card fc2">
-                        ◉
-                        <b>15 SEC</b>
-                    </div>
-
-                    <div class="hero-speech">
-
-                        <span>...</span>
-
-                        <b>
-                            Your caption is ready.
-                        </b>
-
-                    </div>
-
-                </div>
-
-            </div>
+</div>
 
 
-            <!-- COMMUNITY -->
+<!-- =========================================================
+     APPLICATION
+========================================================= -->
 
-            <div class="section-title">
+<div class="app" id="app" aria-hidden="true">
 
-                <div>
+    <!-- =====================================================
+         TOP BAR  (hidden during a round)
+    ===================================================== -->
 
-                    <span class="eyebrow">
-                        COMMUNITY
+    <header class="topbar" id="topbar">
+
+        <button class="logo" data-scene="hub" type="button">
+            <span class="logo-glow"></span>
+            <img class="logo-art" src="../assets/Mascot-Text.png" alt="Caption Chaos">
+        </button>
+
+        <div class="topbar-right">
+
+            <button class="hud-btn" id="creditsBtn" type="button">
+                <span class="hud-ico">
+                    <img src="../assets/Icons/favorite.png" alt="">
+                </span>
+                Credits
+            </button>
+
+            <div class="account" id="account">
+                <button class="hud-btn accent" id="loginBtn" type="button">
+                    <span class="hud-ico">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20a7.4 7.4 0 0 1 14.4 0"/></svg>
                     </span>
+                    <span>Sign in</span>
+                </button>
 
-                    <h3>
-                        Featured Packs
-                    </h3>
+                <div class="login-pop" id="loginPop">
+                    <div class="login-pop-head">
+                        <b>Sign in</b>
+                        <small>Sync your packs across devices</small>
+                    </div>
 
+                    <button class="oauth-btn twitch" id="loginTwitch" type="button">
+                        <svg viewBox="0 0 24 24" class="oauth-ico">
+                            <path d="M4 3h17v11l-5 5h-4l-3 3v-3H4z"/>
+                            <path d="M11 8v4M15.5 8v4" class="stroke"/>
+                        </svg>
+                        <span>Continue with Twitch</span>
+                        <i class="soon">Soon</i>
+                    </button>
+
+                    <button class="oauth-btn gmail" id="loginGoogle" type="button">
+                        <svg viewBox="0 0 24 24" class="oauth-ico">
+                            <path d="M3 6.5h18v11H3z"/>
+                            <path d="m3 7 9 6.5L21 7" class="stroke"/>
+                        </svg>
+                        <span>Continue with Gmail</span>
+                        <i class="soon">Soon</i>
+                    </button>
+
+                    <div class="login-divider"><i>or</i></div>
+
+                    <button class="guest-btn" id="loginGuest" type="button">Play as guest</button>
+
+                    <p class="login-note">Twitch and Gmail sign-in is not connected yet.</p>
                 </div>
+            </div>
 
-                <button
-                    class="link-btn"
-                    data-view="mypacks"
-                >
-                    VIEW ALL →
+            <button class="hud-btn" id="settingsBtn" type="button">
+                <span class="hud-ico">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.4"/><path d="M12 3.2v2.2M12 18.6v2.2M20.8 12h-2.2M5.4 12H3.2M18.2 5.8l-1.6 1.6M7.4 16.6l-1.6 1.6M18.2 18.2l-1.6-1.6M7.4 7.4 5.8 5.8"/></svg>
+                </span>
+                Settings
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         STAGE
+    ===================================================== -->
+
+    <main class="stage" id="stage">
+
+        <!-- =========================
+             HUB
+        ========================== -->
+
+        <section id="hub" class="scene active">
+
+            <div class="hub-head">
+                <span class="eyebrow">Public Beta · Season One</span>
+                <h1 class="hub-title">Make the picture <i>speak.</i></h1>
+                <p class="hub-copy">
+                    An image appears. You get a few seconds and one microphone
+                    to say the worst possible thing about it. Submit
+                    anonymously, let the room suffer, laugh at the results.
+                </p>
+
+                <div class="hub-stats">
+                    <div class="stat"><b>15</b><small>Seconds</small></div>
+                    <div class="stat"><b>4–8</b><small>Players</small></div>
+                    <div class="stat"><b>∞</b><small>Packs</small></div>
+                    <div class="stat"><b id="statOnline">0</b><small>Online</small></div>
+                </div>
+            </div>
+
+            <div class="tiles">
+
+                <button class="tile tile-hero" data-scene="modes" type="button">
+                    <span class="tile-ico"><img src="../assets/Icons/play.png" alt=""></span>
+                    <span class="tile-index">01</span>
+                    <span class="tile-label">Play</span>
+                    <span class="tile-sub">Pick a mode and start a round</span>
+                    <span class="tile-go">→</span>
+                </button>
+
+                <button class="tile" data-scene="packs" type="button">
+                    <span class="tile-ico"><img src="../assets/Icons/studio.png" alt=""></span>
+                    <span class="tile-index">02</span>
+                    <span class="tile-label">Pack Studio</span>
+                    <span class="tile-sub">Build your own image set</span>
+                    <span class="tile-go">→</span>
+                </button>
+
+                <button class="tile" data-scene="mypacks" type="button">
+                    <span class="tile-ico"><img src="../assets/Icons/library.png" alt=""></span>
+                    <span class="tile-index">03</span>
+                    <span class="tile-label">Library</span>
+                    <span class="tile-sub">Everything you have made</span>
+                    <span class="tile-go">→</span>
+                </button>
+
+                <button class="tile tile-wide" data-scene="tutorial" type="button">
+                    <span class="tile-ico"><img src="../assets/Icons/questionmark.png" alt=""></span>
+                    <span class="tile-index">04</span>
+                    <span class="tile-label">How to Play</span>
+                    <span class="tile-sub">The rules, briefly</span>
+                    <span class="tile-go">→</span>
                 </button>
 
             </div>
 
+        </section>
 
-            <div class="packs">
 
-                <article class="pack">
+        <!-- =========================
+             MODE SELECT
+        ========================== -->
 
-                    <div class="pack-art art1">
-                        <span>◉_◉</span>
-                        <b>
-                            RANDOM
-                            <br>
-                            INTERNET
-                        </b>
-                    </div>
+        <section id="modes" class="scene">
 
-                    <div class="pack-row">
+            <div class="sub-head">
+                <button class="back-btn" data-scene="hub" type="button">
+                    <img src="../assets/Icons/home.png" alt="">Back
+                </button>
+                <h2 class="sub-title">New round</h2>
+                <p class="sub-copy">Set the difficulty, pick a mode, or write your own rules.</p>
+            </div>
 
-                        <div>
-                            <b>Random Internet</b>
-                            <small>
-                                @gffin • 18 images
-                            </small>
+            <!-- Difficulty -->
+            <div class="block">
+                <div class="block-head">
+                    <span class="block-index">01</span>
+                    <h3>Difficulty</h3>
+                    <small id="diffSummary">Rounds 5 · 15s · 4 players · Chaos 25</small>
+                </div>
+
+                <div class="diff-row" id="diffRow">
+
+                    <button class="diff-card" data-diff="easy" type="button">
+                        <span class="diff-name">Easy</span>
+                        <span class="diff-meta">5 rounds · 20s · 4p</span>
+                        <span class="diff-desc">Forgiving timers and a gentle room.</span>
+                    </button>
+
+                    <button class="diff-card selected" data-diff="normal" type="button">
+                        <span class="diff-name">Normal</span>
+                        <span class="diff-meta">5 rounds · 15s · 4p</span>
+                        <span class="diff-desc">The way it is meant to be played.</span>
+                    </button>
+
+                    <button class="diff-card" data-diff="hard" type="button">
+                        <span class="diff-name">Hard</span>
+                        <span class="diff-meta">7 rounds · 10s · 6p</span>
+                        <span class="diff-desc">Short timers, bigger room, meaner prompts.</span>
+                    </button>
+
+                    <button class="diff-card" data-diff="nightmare" type="button">
+                        <span class="diff-name">Nightmare</span>
+                        <span class="diff-meta">10 rounds · 7s · 8p</span>
+                        <span class="diff-desc">Seven seconds. No mercy. No undo.</span>
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- Modes -->
+            <div class="block">
+                <div class="block-head">
+                    <span class="block-index">02</span>
+                    <h3>Mode</h3>
+                </div>
+
+                <div class="mode-row-game" id="modeRow">
+
+                    <button class="gmode selected" data-mode="classic" type="button">
+                        <span class="gmode-name">Classic</span>
+                        <span class="gmode-desc">One image per round, one winner.</span>
+                    </button>
+
+                    <button class="gmode" data-mode="blitz" type="button">
+                        <span class="gmode-name">Blitz</span>
+                        <span class="gmode-desc">Half the time on every prompt.</span>
+                    </button>
+
+                    <button class="gmode" data-mode="turn" type="button">
+                        <span class="gmode-name">Turn</span>
+                        <span class="gmode-desc">Hear everyone each round, no cuts.</span>
+                    </button>
+
+                    <button class="gmode" data-mode="custom" type="button">
+                        <span class="gmode-name">Custom</span>
+                        <span class="gmode-desc">Write your own rules below.</span>
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- Custom rules -->
+            <div class="block" id="customBlock" hidden>
+
+                <div class="block-head">
+                    <span class="block-index">03</span>
+                    <h3>Custom rules</h3>
+                    <small>These override the difficulty preset.</small>
+                </div>
+
+                <div class="rules">
+
+                    <div class="rule">
+                        <span class="rule-label">Rounds</span>
+                        <div class="stepper" data-rule="rounds">
+                            <button class="step" data-dir="-1" type="button">−</button>
+                            <b id="ruleRounds">5</b>
+                            <button class="step" data-dir="1" type="button">+</button>
                         </div>
-
-                        <span>
-                            ♥ 243
-                        </span>
-
                     </div>
 
-                </article>
-
-
-                <article class="pack">
-
-                    <div class="pack-art art2">
-
-                        <span>
-                            WHAT.
-                        </span>
-
-                        <b>
-                            WHY DID
-                            <br>
-                            I DO THAT?
-                        </b>
-
-                    </div>
-
-                    <div class="pack-row">
-
-                        <div>
-                            <b>Why Did I Do That?</b>
-
-                            <small>
-                                @pixelmilk • 24 images
-                            </small>
+                    <div class="rule">
+                        <span class="rule-label">Seconds each</span>
+                        <div class="stepper" data-rule="seconds">
+                            <button class="step" data-dir="-1" type="button">−</button>
+                            <b id="ruleSeconds">15</b>
+                            <button class="step" data-dir="1" type="button">+</button>
                         </div>
-
-                        <span>
-                            ♥ 187
-                        </span>
-
                     </div>
 
-                </article>
-
-
-                <article class="pack">
-
-                    <div class="pack-art art3">
-
-                        <span>
-                            ◉_◉
-                        </span>
-
-                        <b>
-                            ABSOLUTELY
-                            <br>
-                            NORMAL
-                        </b>
-
-                    </div>
-
-                    <div class="pack-row">
-
-                        <div>
-
-                            <b>
-                                Absolutely Normal
-                            </b>
-
-                            <small>
-                                @moth.exe • 12 images
-                            </small>
-
+                    <div class="rule">
+                        <span class="rule-label">Players</span>
+                        <div class="stepper" data-rule="players">
+                            <button class="step" data-dir="-1" type="button">−</button>
+                            <b id="rulePlayers">4</b>
+                            <button class="step" data-dir="1" type="button">+</button>
                         </div>
-
-                        <span>
-                            ♥ 92
-                        </span>
-
                     </div>
 
-                </article>
+                    <div class="rule">
+                        <span class="rule-label">Chaos level</span>
+                        <div class="slider-wrap">
+                            <input type="range" id="ruleChaos" min="0" max="100" step="5" value="25">
+                            <b id="ruleChaosValue">25</b>
+                        </div>
+                    </div>
 
+                    <div class="rule rule-switch">
+                        <span class="rule-label">Anonymous submissions</span>
+                        <button class="toggle on" id="ruleAnon" type="button" aria-label="Toggle anonymity"></button>
+                    </div>
+
+                    <div class="rule rule-switch">
+                        <span class="rule-label">Play every recording</span>
+                        <button class="toggle on" id="rulePlayback" type="button" aria-label="Toggle playback"></button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="start-row">
+                <div class="start-summary" id="startSummary">
+                    Normal · Classic · 5 rounds · 15s
+                </div>
+                <button class="btn btn-primary btn-lg" id="startRound" type="button">
+                    <span>Start round</span>
+                    <em>→</em>
+                </button>
             </div>
 
         </section>
 
 
         <!-- =========================
-             PLAY
-        ========================= -->
+             GAME - RECORD
+        ========================== -->
 
-        <section id="play" class="view">
+        <section id="play" class="scene scene-game">
 
-            <div class="game-top">
-
-                <div class="round-chip">
-                    ROUND
-                    <b id="roundNo">01</b>
-                    <span>/ 05</span>
-                </div>
-
-                <div class="room-code">
-
-                    ROOM
-
-                    <b>
-                        CHAOS-7F3
-                    </b>
-
-                    <button>
-                        ⧉
-                    </button>
-
-                </div>
-
-                <div class="players">
-                    ● 4/8 PLAYERS
-                </div>
-
+            <div class="game-strip">
+                <div class="gs"><small>Round</small><b><i id="roundNo">01</i> / <i id="roundTotal">05</i></b></div>
+                <div class="gs"><small>Difficulty</small><b id="gsDiff">Normal</b></div>
+                <div class="gs"><small>Mode</small><b id="gsMode">Classic</b></div>
+                <div class="gs"><small>Players</small><b><i id="gsPlayers">4</i> / 8</b></div>
+                <button class="gs-quit" id="quitRound" type="button">Quit round</button>
             </div>
 
+            <div class="play-grid">
 
-            <div class="game">
-
-                <!-- IMAGE -->
-
-                <div class="image-card">
-
-                    <div class="image-top">
-
-                        <span>
-                            CAPTION THIS
-                        </span>
-
-                        <i>
-                            PACK • RANDOM INTERNET
-                        </i>
-
+                <div class="prompt-panel panel">
+                    <div class="panel-head">
+                        <span class="panel-title">Caption this</span>
+                        <span class="caption-card dim">Random Internet</span>
                     </div>
 
-                    <div class="fake-meme">
-
-                        <div class="meme-glow"></div>
-
-                        <div class="meme-face">
-                            ◉‿◉
+                    <div class="prompt-art">
+                        <div class="prompt-art-sky"></div>
+                        <div class="prompt-art-figure">◕‿◕</div>
+                        <div class="caption-strip">
+                            <b>When the mic was already on</b>
+                            <small id="promptRound">Round 1</small>
                         </div>
-
-                        <div class="meme-object">
-                            ◆
-                        </div>
-
-                        <div class="meme-caption">
-                            WHEN YOU REALIZE
-                            <br>
-                            THE MIC WAS ON
-                        </div>
-
                     </div>
 
-                    <div class="prompt-pill">
-                        WHAT IS HAPPENING HERE?
-                    </div>
-
+                    <div class="prompt-ask">What is happening here?</div>
                 </div>
 
-
-                <!-- RECORDING -->
-
-                <div class="record-card">
-
-                    <div class="record-head">
-
+                <div class="rec-panel panel">
+                    <div class="panel-head">
                         <div>
-
-                            <span class="eyebrow">
-                                YOUR TURN
-                            </span>
-
-                            <h3>
-                                Create your caption.
-                            </h3>
-
+                            <span class="panel-title">Your turn</span>
+                            <small class="panel-sub">Create your caption</small>
                         </div>
-
-                        <div class="big-timer">
-
-                            <b id="timer">
-                                15
-                            </b>
-
-                            <small>
-                                SEC
-                            </small>
-
+                        <div class="timer" id="timerWrap">
+                            <b id="timer">15</b><small>sec</small>
                         </div>
-
                     </div>
 
-                    <p class="record-help">
-                        Press the button and speak naturally.
-                        Your microphone recording will be saved as your
-                        caption audio. Your recording is not played to the room
-                        during submission.
+                    <p class="rec-help">
+                        Press record and speak naturally. Your real voice is the
+                        caption. Nothing is played to the room while you record.
                     </p>
 
+                    <div class="wave" id="wave"></div>
 
-                    <!-- WAVEFORM -->
+                    <div class="mic-state" id="micState"><span class="dot"></span>Microphone ready</div>
 
-                    <div id="wave" class="wave"></div>
-
-
-                    <!-- MICROPHONE STATE -->
-
-                    <div id="micState" class="mic-state">
-
-                        <span></span>
-
-                        MICROPHONE READY
-
-                    </div>
-
-
-                    <!-- RECORD -->
-
-                    <button
-                        id="recordBtn"
-                        class="mic-btn"
-                    >
-
-                        <span>●</span>
-
-                        START RECORDING
-
+                    <button id="recordBtn" class="mic-btn" type="button">
+                        <span class="mic-btn-dot"></span>Start recording
                     </button>
 
-
-                    <!-- SUBMIT -->
-
-                    <button
-                        id="submitBtn"
-                        class="btn primary full hidden"
-                    >
-
-                        SUBMIT CAPTION
-
-                        <span>→</span>
-
+                    <button id="submitBtn" class="btn btn-primary full hidden" type="button">
+                        <span>Submit caption</span><em>→</em>
                     </button>
 
+                    <div id="captionPreview" class="caption-preview hidden"></div>
 
-                    <!-- PREVIEW -->
-
-                    <div
-                        id="captionPreview"
-                        class="caption-preview hidden"
-                    ></div>
-
-
-                    <div class="privacy-note">
-
-                        ✦ YOUR RECORDING IS PRIVATE
-                        •
-                        SUBMISSIONS ARE ANONYMOUS
-
-                    </div>
-
+                    <div class="privacy-note" id="privacyNote">✦ Your recording stays private</div>
                 </div>
 
             </div>
@@ -695,81 +526,56 @@
 
 
         <!-- =========================
-             VOTE
-        ========================= -->
+             GAME - VOTE
+        ========================== -->
 
-        <section id="vote" class="view">
+        <section id="vote" class="scene scene-game">
 
             <div class="vote-head">
-
                 <div>
-
-                    <span class="eyebrow">
-                        THE ROOM HAS SPOKEN
-                    </span>
-
-                    <h2>
-                        Choose the best caption.
-                    </h2>
-
-                    <p>
-                        Listen to each anonymous submission and
-                        select the caption you believe fits the image.
-                    </p>
-
+                    <span class="eyebrow">The room has spoken</span>
+                    <h2 class="sub-title">Choose the best caption.</h2>
+                    <p class="sub-copy">Play each submission, then pick the one that fits.</p>
                 </div>
-
-                <div class="vote-clock">
-                    00:45
-                </div>
-
+                <div class="vote-clock"><small>Time</small><b>00:45</b></div>
             </div>
 
-            <div
-                id="submissionList"
-                class="submissions"
-            ></div>
+            <div id="submissionList" class="submissions"></div>
 
         </section>
 
 
         <!-- =========================
-             WINNER
-        ========================= -->
+             GAME - WINNER
+        ========================== -->
 
-        <section id="winner" class="view">
+        <section id="winner" class="scene scene-game">
 
             <div class="winner">
+                <div class="winner-rays"></div>
+                <div class="winner-confetti" id="winnerConfetti"></div>
 
-                <div class="burst">
-                    ✦ ✧ ✦ ✧ ✦
+                <div class="winner-crest">
+                    <img src="../assets/Icons/favorite.png" alt="">
                 </div>
 
                 <div class="winner-mascot">
-
-                    <img
-                        src="../assets/mascot.png"
-                        alt="Voicy"
-                    >
-
-                    <div>
-                        ROUND COMPLETE
-                    </div>
-
+                    <img src="../assets/mascot.png" alt="Voicy">
                 </div>
 
-                <span class="winner-tag">
-                    ROUND WINNER
-                </span>
+                <span class="winner-tag">Round winner</span>
 
-                <h2 id="winnerText">
-                    "The winning caption will appear here."
-                </h2>
+                <h2 class="winner-text" id="winnerText">The winning caption will appear here.</h2>
 
-                <p>
-                    Congratulations to the selected submission.
-                </p>
+                <p class="sub-copy">Congratulations to the chosen submission.</p>
 
+                <div class="winner-actions">
+                    <button class="btn btn-primary" id="nextRound" type="button"><span>Next round</span><em>→</em></button>
+                    <button class="btn btn-ghost" data-scene="hub" type="button">
+                        <img class="btn-ico" src="../assets/Icons/home.png" alt="">
+                        <span>Back to hub</span>
+                    </button>
+                </div>
             </div>
 
         </section>
@@ -777,173 +583,63 @@
 
         <!-- =========================
              PACK STUDIO
-        ========================= -->
+        ========================== -->
 
-        <section id="packs" class="view">
+        <section id="packs" class="scene">
+
+            <div class="sub-head">
+                <button class="back-btn" data-scene="hub" type="button">
+                    <img src="../assets/Icons/home.png" alt="">Back
+                </button>
+                <h2 class="sub-title">Pack Studio</h2>
+                <p class="sub-copy">Build a custom collection of images and ship it to the lobby.</p>
+            </div>
 
             <div class="studio">
 
-                <div class="studio-side">
+                <aside class="panel studio-intro">
+                    <span class="eyebrow">Creator tools</span>
+                    <ol class="steps">
+                        <li class="active"><b>01</b><span>Details</span></li>
+                        <li><b>02</b><span>Images</span></li>
+                        <li><b>03</b><span>Publish</span></li>
+                    </ol>
+                </aside>
 
-                    <span class="eyebrow">
-                        CREATOR TOOLS
-                    </span>
+                <div class="panel studio-form">
 
-                    <h2>
-                        Pack Studio
-                    </h2>
-
-                    <p>
-                        Create a custom collection of images
-                        for Caption Chaos.
-                    </p>
-
-                    <div class="studio-steps">
-
-                        <div class="active">
-
-                            <b>
-                                01
-                            </b>
-
-                            <span>
-                                DETAILS
-                            </span>
-
-                        </div>
-
-                        <div>
-
-                            <b>
-                                02
-                            </b>
-
-                            <span>
-                                IMAGES
-                            </span>
-
-                        </div>
-
-                        <div>
-
-                            <b>
-                                03
-                            </b>
-
-                            <span>
-                                PUBLISH
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="studio-main">
-
-                    <label>
-
-                        PACK NAME
-
-                        <input
-                            id="packName"
-                            value="Unhinged Internet"
-                            placeholder="Enter a pack name"
-                        >
-
+                    <label class="field">
+                        <span>Pack name</span>
+                        <input id="packName" value="Unhinged Internet" placeholder="Enter a pack name">
                     </label>
 
-
-                    <label>
-
-                        DESCRIPTION
-
-                        <textarea
-                            id="packDescription"
-                            placeholder="Describe your pack..."
-                        >A collection of unusual images for creative captions.</textarea>
-
+                    <label class="field">
+                        <span>Description</span>
+                        <textarea id="packDescription" rows="3" placeholder="Describe your pack…">A collection of unusual images for creative captions.</textarea>
                     </label>
 
-
-                    <div class="upload-row">
-
-                        <button class="upload">
-
-                            <span>
-                                ＋
-                            </span>
-
-                            <b>
-                                ADD IMAGE
-                            </b>
-
-                            <small>
-                                PNG / JPG / WEBP
-                            </small>
-
-                        </button>
-
-
-                        <div class="thumbs">
-
-                            <div class="thumb art1">
-                                ◉_◉
+                    <div class="field">
+                        <span>Images</span>
+                        <div class="upload-row">
+                            <button class="upload" type="button">
+                                <b>＋</b><span>Add image</span><small>PNG / JPG / WEBP</small>
+                            </button>
+                            <div class="thumbs">
+                                <div class="thumb art-1">◕‿◕</div>
+                                <div class="thumb art-2">WHAT.</div>
+                                <div class="thumb art-3">◕‿◕</div>
                             </div>
-
-                            <div class="thumb art2">
-                                WHAT.
-                            </div>
-
-                            <div class="thumb art3">
-                                ◉_◉
-                            </div>
-
                         </div>
-
                     </div>
 
-
-                    <div class="prompt-box">
-
-                        <div>
-
-                            <b>
-                                DEFAULT PROMPT
-                            </b>
-
-                            <small>
-                                What should players be asked?
-                            </small>
-
-                        </div>
-
-                        <input
-                            value="Caption this."
-                        >
-
+                    <div class="field field-row">
+                        <div><b>Default prompt</b><small>What should players be asked?</small></div>
+                        <input value="Caption this.">
                     </div>
-
 
                     <div class="studio-actions">
-
-                        <button
-                            class="btn ghost"
-                            id="saveDraft"
-                        >
-                            SAVE DRAFT
-                        </button>
-
-                        <button
-                            class="btn primary"
-                            id="publishPack"
-                        >
-                            PUBLISH PACK
-                            ✦
-                        </button>
-
+                        <button class="btn btn-ghost" id="saveDraft" type="button"><span>Save draft</span></button>
+                        <button class="btn btn-primary" id="publishPack" type="button"><span>Publish pack</span><em>✦</em></button>
                     </div>
 
                 </div>
@@ -955,83 +651,32 @@
 
         <!-- =========================
              LIBRARY
-        ========================= -->
+        ========================== -->
 
-        <section id="mypacks" class="view">
+        <section id="mypacks" class="scene">
 
-            <div class="library-head">
-
-                <div>
-
-                    <span class="eyebrow">
-                        YOUR CONTENT
-                    </span>
-
-                    <h2>
-                        Pack Library
-                    </h2>
-
-                </div>
-
-                <button
-                    class="btn primary small"
-                    data-view="packs"
-                >
-                    ＋ NEW PACK
+            <div class="sub-head">
+                <button class="back-btn" data-scene="hub" type="button">
+                    <img src="../assets/Icons/home.png" alt="">Back
                 </button>
-
+                <h2 class="sub-title">Pack Library</h2>
+                <p class="sub-copy">Everything you have made, published or not.</p>
             </div>
-
 
             <div class="library">
 
-                <div class="lib-card">
-
-                    <div class="lib-art art1">
-                        ◉_◉
-                    </div>
-
-                    <div>
-
-                        <b>
-                            Unhinged Internet
-                        </b>
-
-                        <small>
-                            PUBLISHED • 243 plays • 18 images
-                        </small>
-
-                    </div>
-
-                    <button class="btn ghost small">
-                        MANAGE
-                    </button>
-
+                <div class="lib-row panel">
+                    <div class="lib-art art-1">◕‿◕</div>
+                    <div class="lib-info"><b>Unhinged Internet</b><small>Published · 243 plays · 18 images</small></div>
+                    <span class="badge badge-live">Live</span>
+                    <button class="btn btn-ghost btn-sm" type="button"><span>Manage</span></button>
                 </div>
 
-
-                <div class="lib-card">
-
-                    <div class="lib-art art2">
-                        WHAT.
-                    </div>
-
-                    <div>
-
-                        <b>
-                            Funny Screenshots
-                        </b>
-
-                        <small>
-                            DRAFT • 0 plays • 7 images
-                        </small>
-
-                    </div>
-
-                    <button class="btn ghost small">
-                        EDIT
-                    </button>
-
+                <div class="lib-row panel">
+                    <div class="lib-art art-2">WHAT.</div>
+                    <div class="lib-info"><b>Funny Screenshots</b><small>Draft · 0 plays · 7 images</small></div>
+                    <span class="badge badge-draft">Draft</span>
+                    <button class="btn btn-ghost btn-sm" type="button"><span>Edit</span></button>
                 </div>
 
             </div>
@@ -1040,208 +685,41 @@
 
 
         <!-- =========================
-             TUTORIAL
-        ========================= -->
+             GUIDE
+        ========================== -->
 
-        <section id="tutorial" class="view">
+        <section id="tutorial" class="scene">
 
-            <div class="tutorial">
-
-                <div class="tutorial-visual">
-
-                    <div class="tutorial-orbit"></div>
-
-                    <img
-                        src="../assets/mascot.png"
-                        alt="Voicy"
-                    >
-
-                    <div class="tutorial-dialog">
-
-                        <b>
-                            VOICY
-                        </b>
-
-                        <span id="tutorialLine">
-                            Welcome to Caption Chaos.
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="tutorial-content">
-
-                    <span class="eyebrow">
-                        TUTORIAL / 01
-                    </span>
-
-                    <h2>
-                        Meet <i>Voicy.</i>
-                    </h2>
-
-                    <p>
-                        Voicy is the official mascot of Caption Chaos.
-                        Voicy guides players through each round while
-                        keeping the experience clear and engaging.
-                    </p>
-
-
-                    <div class="tutorial-cards">
-
-                        <div>
-
-                            <b>
-                                01
-                            </b>
-
-                            <strong>
-                                SEE
-                            </strong>
-
-                            <span>
-                                An image appears.
-                            </span>
-
-                        </div>
-
-                        <div>
-
-                            <b>
-                                02
-                            </b>
-
-                            <strong>
-                                SPEAK
-                            </strong>
-
-                            <span>
-                                You have fifteen seconds.
-                            </span>
-
-                        </div>
-
-                        <div>
-
-                            <b>
-                                03
-                            </b>
-
-                            <strong>
-                                SUBMIT
-                            </strong>
-
-                            <span>
-                                Your recording is submitted anonymously.
-                            </span>
-
-                        </div>
-
-                        <div>
-
-                            <b>
-                                04
-                            </b>
-
-                            <strong>
-                                VOTE
-                            </strong>
-
-                            <span>
-                                Players select their favorite.
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <button
-                        id="tutorialNext"
-                        class="btn primary"
-                    >
-                        NEXT LESSON →
-                    </button>
-
-                </div>
-
+            <div class="sub-head">
+                <button class="back-btn" data-scene="hub" type="button">
+                    <img src="../assets/Icons/home.png" alt="">Back
+                </button>
+                <h2 class="sub-title">How to play</h2>
+                <p class="sub-copy">Four steps, then you are in.</p>
             </div>
 
-        </section>
+            <div class="guide">
 
-
-        <!-- =========================
-             SETTINGS
-        ========================= -->
-
-        <section id="settings" class="view">
-
-            <div class="settings">
-
-                <span class="eyebrow">
-                    SYSTEM
-                </span>
-
-                <h2>
-                    Settings
-                </h2>
-
-
-                <div class="setting">
-
-                    <div>
-
-                        <b>
-                            Voicy Voice
-                        </b>
-
-                        <small>
-                            Enable Voicy's original recorded voice.
-                            No text-to-speech processing is used.
-                        </small>
-
+                <div class="guide-visual panel">
+                    <img src="../assets/mascot.png" alt="Voicy">
+                    <div class="guide-say">
+                        <b>Voicy</b>
+                        <span id="tutorialLine">Welcome to Caption Chaos.</span>
                     </div>
-
-                    <button class="toggle on"></button>
-
                 </div>
 
+                <div class="guide-body">
 
-                <div class="setting">
-
-                    <div>
-
-                        <b>
-                            Animated Interface
-                        </b>
-
-                        <small>
-                            Keep mascot and interface animations enabled.
-                        </small>
-
+                    <div class="lesson-grid">
+                        <div class="lesson"><b>01</b><strong>See</strong><span>An image appears.</span></div>
+                        <div class="lesson"><b>02</b><strong>Speak</strong><span>You have a few seconds.</span></div>
+                        <div class="lesson"><b>03</b><strong>Submit</strong><span>Your voice goes in anonymously.</span></div>
+                        <div class="lesson"><b>04</b><strong>Vote</strong><span>The room picks a winner.</span></div>
                     </div>
 
-                    <button class="toggle on"></button>
-
-                </div>
-
-
-                <div class="setting">
-
-                    <div>
-
-                        <b>
-                            Reduced Motion
-                        </b>
-
-                        <small>
-                            Disable most visual movement.
-                        </small>
-
-                    </div>
-
-                    <button class="toggle"></button>
+                    <button class="btn btn-primary" id="tutorialNext" type="button">
+                        <span>Next lesson</span><em>→</em>
+                    </button>
 
                 </div>
 
@@ -1251,7 +729,104 @@
 
     </main>
 
+
+    <!-- =====================================================
+         BOTTOM BAR  (hidden during a round)
+    ===================================================== -->
+
+    <footer class="footbar" id="footbar">
+
+        <button class="foot-mascot" id="footMascot" type="button" title="Talk to Voicy">
+            <img src="../assets/mascot.png" alt="Voicy">
+        </button>
+
+        <div class="foot-status">
+            <b id="footStatus">Voicy is ready</b>
+            <small id="footSub">Microphone available</small>
+        </div>
+
+        <div class="foot-right">
+
+            <button class="hud-btn" id="ttsButton" type="button">
+                Voicy voice <em id="ttsState">On</em>
+            </button>
+
+            <div class="profile" id="discordProfile">
+                <img id="discordAvatar" class="profile-avatar" src="../assets/mascot.png" alt="">
+                <div class="profile-info">
+                    <b id="discordDisplayName">Not connected</b>
+                    <small id="discordUsername">Link Discord</small>
+                </div>
+                <button id="connectDiscordBtn" class="hud-btn accent" type="button">Connect</button>
+            </div>
+
+        </div>
+
+    </footer>
+
 </div>
+
+
+<!-- =========================================================
+     MODALS
+========================================================= -->
+
+<div class="modal" id="settingsModal" aria-hidden="true">
+    <div class="modal-scrim" data-close></div>
+
+    <div class="modal-card panel">
+        <button class="modal-close" data-close type="button">✕</button>
+
+        <span class="eyebrow">System</span>
+        <h2 class="modal-title">Settings</h2>
+
+        <div class="setting">
+            <div><b>Voicy voice</b><small>Play Voicy's recorded lines. No text-to-speech.</small></div>
+            <button class="toggle on" type="button" aria-label="Toggle Voicy voice"></button>
+        </div>
+
+        <div class="setting">
+            <div><b>Animated interface</b><small>Keep mascot and background motion enabled.</small></div>
+            <button class="toggle on" type="button" aria-label="Toggle animation"></button>
+        </div>
+
+        <div class="setting">
+            <div><b>Reduced motion</b><small>Cut background motion and screen effects.</small></div>
+            <button class="toggle" id="motionToggle" type="button" aria-label="Toggle reduced motion"></button>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal" id="creditsModal" aria-hidden="true">
+    <div class="modal-scrim" data-close></div>
+
+    <div class="modal-card panel">
+        <button class="modal-close" data-close type="button">✕</button>
+
+        <span class="eyebrow">Credits</span>
+        <h2 class="modal-title">Caption Chaos</h2>
+
+        <div class="credits-grid">
+            <div class="credit"><small>Created by</small><b>Nick</b></div>
+            <div class="credit"><small>Mascot</small><b>Voicy</b></div>
+            <div class="credit"><small>Engine</small><b>Electron</b></div>
+            <div class="credit"><small>Version</small><b>1.0.0</b></div>
+        </div>
+
+        <p class="credits-note">
+            Background footage is free stock drone nature video, cut and
+            graded to monochrome. Voicy and the wordmark are original art.
+        </p>
+
+        <p class="credits-note credits-note-dim">
+            Uses Discord Rich Presence. Discord sign-in links your presence to
+            your profile.
+        </p>
+    </div>
+</div>
+
 
 <script src="renderer.js"></script>
 

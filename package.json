@@ -5,13 +5,19 @@
 "main": "src/main.js",
 "scripts": {
 "start": "electron .",
+"server": "node server.js",
 "build": "electron-builder"
 },
 "keywords": [],
 "author": "Nick",
 "license": "MIT",
 "type": "commonjs",
+"dependencies": {
+"discord-rpc": "^4.0.1",
+"express": "^4.21.2"
+},
 "devDependencies": {
+"ws": "^8.18.3",
 "electron": "^44.4.3",
 "electron-builder": "^26.15.3"
 },
@@ -23,6 +29,7 @@
 },
 "files": [
 "src/**/*",
+"!src/package.json",
 "assets/**/*",
 "icon.ico",
 "package.json"
