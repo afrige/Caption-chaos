@@ -60,7 +60,7 @@
 
     <div class="boot-mascot">
         <div class="boot-mascot-glow"></div>
-        <img src="../assets/mascot.png" alt="Voicy">
+        <img src="../assets/Mascot.png" alt="Voicy">
     </div>
 
     <div class="boot-inner">
@@ -135,15 +135,90 @@
      VOICY DIALOGUE
 ========================================================= -->
 
+<!-- One dialogue box, two jobs.
+
+     Plain speech: mascotSay types a line into #dialogueText and a Skip
+     button hangs off the corner.
+
+     Tour: the getting-started steps use the same box, the same portrait
+     on top and the same name row, with the step's title, its copy, the
+     thing it wants you to press, and the progress under it. Both live
+     here so there is only ever one Voicy on screen - a second box
+     floating under the first looked like a bug, because it was. -->
+
 <div id="dialogue" class="dialogue hidden">
 
     <div class="dialogue-portrait">
-        <img src="../assets/mascot.png" alt="Voicy">
+        <img src="../assets/Mascot.png" alt="Voicy">
     </div>
 
-    <div class="dialogue-body">
+    <!-- plain speech -->
+    <div class="dialogue-body" id="dialogueBody">
         <div class="dialogue-name">Voicy <span class="dot"></span></div>
         <div id="dialogueText" class="typewriter"></div>
+    </div>
+
+    <!-- the tour -->
+    <div class="dialogue-tour hidden" id="dialogueTour">
+        <div class="dialogue-name">Voicy <span class="dot"></span></div>
+
+        <div class="dialogue-tour-head">
+            <h3 class="dialogue-tour-title" id="tourTitle">Welcome</h3>
+            <span class="dialogue-tour-kicker" id="tourKicker">Introduction</span>
+        </div>
+
+        <p class="dialogue-tour-copy typewriter" id="tourCopy"></p>
+
+        <div class="dialogue-goal" id="tourGoal">
+            <span class="dialogue-goal-label">Do this</span>
+            <b id="tourAction">Read on</b>
+
+            <button class="btn btn-primary" id="practiceStart"
+                data-practice-start type="button">
+                <span>Open the practice round</span>
+            </button>
+        </div>
+
+        <div class="dialogue-tour-foot">
+            <div class="dialogue-tour-progress">
+                <div class="tour-bar"><i id="tourBar"></i></div>
+                <span id="tourCount">Step 1 of 10</span>
+            </div>
+
+            <div class="dialogue-tour-actions">
+                <button class="btn btn-ghost" id="tourSkipAll" type="button">
+                    <span>Skip the tour</span>
+                </button>
+                <button class="btn btn-primary" id="tourNext" type="button">
+                    <span id="tourNextLabel">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- the ending, in the same box -->
+    <div class="dialogue-tour hidden" id="dialogueEnd">
+        <div class="dialogue-name">Voicy <span class="dot"></span></div>
+
+        <h3 class="dialogue-tour-title">That is every screen</h3>
+
+        <p class="dialogue-tour-copy">
+            You have been through all of it. Play when you are ready - the
+            room fills up when you start a real round, and your captions go
+            in anonymously either way.
+        </p>
+
+        <div class="dialogue-tour-foot">
+            <div></div>
+            <div class="dialogue-tour-actions">
+                <button class="btn btn-ghost" id="tourReplay" type="button">
+                    <span>Run it again</span>
+                </button>
+                <button class="btn btn-primary" data-scene="modes" type="button">
+                    <span>Start a round</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <button id="dialogueSkip" class="dialogue-skip" type="button">Skip</button>
@@ -158,90 +233,25 @@
 <div class="app" id="app" aria-hidden="true">
 
     <!-- =====================================================
-         TOP BAR  (hidden during a round)
-    ===================================================== -->
-
-    <header class="topbar" id="topbar">
-
-        <button class="logo" data-scene="hub" type="button">
-            <span class="logo-glow"></span>
-            <img class="logo-art" src="../assets/Mascot-Text.png" alt="Caption Chaos">
-        </button>
-
-        <div class="topbar-right">
-
-            <button class="hud-btn" id="creditsBtn" type="button">
-                <span class="hud-ico">
-                    <img src="../assets/Icons/favorite.png" alt="">
-                </span>
-                Credits
-            </button>
-
-            <div class="account" id="account">
-                <button class="hud-btn accent" id="loginBtn" type="button">
-                    <span class="hud-ico">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20a7.4 7.4 0 0 1 14.4 0"/></svg>
-                    </span>
-                    <span>Sign in</span>
-                </button>
-
-                <div class="login-pop" id="loginPop">
-                    <div class="login-pop-head">
-                        <b>Sign in</b>
-                        <small>Sync your packs across devices</small>
-                    </div>
-
-                    <button class="oauth-btn twitch" id="loginTwitch" type="button">
-                        <svg viewBox="0 0 24 24" class="oauth-ico">
-                            <path d="M4 3h17v11l-5 5h-4l-3 3v-3H4z"/>
-                            <path d="M11 8v4M15.5 8v4" class="stroke"/>
-                        </svg>
-                        <span>Continue with Twitch</span>
-                        <i class="soon">Soon</i>
-                    </button>
-
-                    <button class="oauth-btn gmail" id="loginGoogle" type="button">
-                        <svg viewBox="0 0 24 24" class="oauth-ico">
-                            <path d="M3 6.5h18v11H3z"/>
-                            <path d="m3 7 9 6.5L21 7" class="stroke"/>
-                        </svg>
-                        <span>Continue with Gmail</span>
-                        <i class="soon">Soon</i>
-                    </button>
-
-                    <div class="login-divider"><i>or</i></div>
-
-                    <button class="guest-btn" id="loginGuest" type="button">Play as guest</button>
-
-                    <p class="login-note">Twitch and Gmail sign-in is not connected yet.</p>
-                </div>
-            </div>
-
-            <button class="hud-btn" id="settingsBtn" type="button">
-                <span class="hud-ico">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.4"/><path d="M12 3.2v2.2M12 18.6v2.2M20.8 12h-2.2M5.4 12H3.2M18.2 5.8l-1.6 1.6M7.4 16.6l-1.6 1.6M18.2 18.2l-1.6-1.6M7.4 7.4 5.8 5.8"/></svg>
-                </span>
-                Settings
-            </button>
-
-        </div>
-
-    </header>
-
-
-    <!-- =====================================================
          STAGE
     ===================================================== -->
+
+    <!-- 3-2-1 shown when a round opens -->
+    <div class="countdown" id="countdown" aria-hidden="true">
+        <span class="countdown-round" id="countdownRound">Round 1</span>
+        <b class="countdown-num" id="countdownNum">3</b>
+        <span class="countdown-go" id="countdownGo"></span>
+    </div>
 
     <main class="stage" id="stage">
 
         <!-- =========================
              HUB
-        ========================== -->
+         ========================== -->
 
         <section id="hub" class="scene active">
 
-            <div class="hub-head">
+            <div class="hub-intro">
                 <span class="eyebrow">Public Beta · Season One</span>
                 <h1 class="hub-title">Make the picture <i>speak.</i></h1>
                 <p class="hub-copy">
@@ -249,53 +259,107 @@
                     to say the worst possible thing about it. Submit
                     anonymously, let the room suffer, laugh at the results.
                 </p>
-
-                <div class="hub-stats">
-                    <div class="stat"><b>15</b><small>Seconds</small></div>
-                    <div class="stat"><b>4–8</b><small>Players</small></div>
-                    <div class="stat"><b>∞</b><small>Packs</small></div>
-                    <div class="stat"><b id="statOnline">0</b><small>Online</small></div>
-                </div>
             </div>
 
-            <div class="tiles">
+            <div class="menu-board">
 
-                <button class="tile tile-hero" data-scene="modes" type="button">
-                    <span class="tile-ico"><img src="../assets/Icons/play.png" alt=""></span>
-                    <span class="tile-index">01</span>
-                    <span class="tile-label">Play</span>
-                    <span class="tile-sub">Pick a mode and start a round</span>
-                    <span class="tile-go">→</span>
-                </button>
+                <div class="menu-body">
 
-                <button class="tile" data-scene="packs" type="button">
-                    <span class="tile-ico"><img src="../assets/Icons/studio.png" alt=""></span>
-                    <span class="tile-index">02</span>
-                    <span class="tile-label">Pack Studio</span>
-                    <span class="tile-sub">Build your own image set</span>
-                    <span class="tile-go">→</span>
-                </button>
+                    <div class="play-panel">
+                        <button class="play-card" data-scene="modes" type="button">
+                            <span class="play-ico">
+                                <img src="../assets/Icons/play.png" alt="">
+                            </span>
 
-                <button class="tile" data-scene="mypacks" type="button">
-                    <span class="tile-ico"><img src="../assets/Icons/library.png" alt=""></span>
-                    <span class="tile-index">03</span>
-                    <span class="tile-label">Library</span>
-                    <span class="tile-sub">Everything you have made</span>
-                    <span class="tile-go">→</span>
-                </button>
+                            <span class="play-text">
+                                <b>Play</b>
+                                <small id="playRule">Normal · Classic</small>
+                            </span>
 
-                <button class="tile tile-wide" data-scene="tutorial" type="button">
-                    <span class="tile-ico"><img src="../assets/Icons/questionmark.png" alt=""></span>
-                    <span class="tile-index">04</span>
-                    <span class="tile-label">How to Play</span>
-                    <span class="tile-sub">The rules, briefly</span>
-                    <span class="tile-go">→</span>
-                </button>
+                            <span class="play-go">New round</span>
+                        </button>
+
+                        <div class="quick-pick" role="group" aria-label="Difficulty">
+                            <span class="quick-label">Quick pick</span>
+                            <div class="quick-row" id="quickDiff"></div>
+                        </div>
+                    </div>
+
+                    <nav class="menu-list" aria-label="Sections">
+
+                        <button class="menu-row" data-scene="packs" type="button">
+                            <span class="menu-ico">
+                                <img src="../assets/Icons/studio.png" alt="">
+                            </span>
+                            <span class="menu-text">
+                                <b>Pack Studio</b>
+                                <small>Build your own image set</small>
+                            </span>
+                            <span class="menu-go" aria-hidden="true">&rsaquo;</span>
+                        </button>
+
+                        <button class="menu-row" data-scene="mypacks" type="button">
+                            <span class="menu-ico">
+                                <img src="../assets/Icons/library.png" alt="">
+                            </span>
+                            <span class="menu-text">
+                                <b>Library</b>
+                                <small>Everything you have published</small>
+                            </span>
+                            <span class="menu-go" aria-hidden="true">&rsaquo;</span>
+                        </button>
+
+                        <button class="menu-row" data-scene="profile" type="button">
+                            <span class="menu-ico">
+                                <img src="../assets/Mascot.png" alt="">
+                            </span>
+                            <span class="menu-text">
+                                <b>Profile</b>
+                                <small>Your card, stats, badges and standings</small>
+                            </span>
+                            <span class="menu-go" aria-hidden="true">&rsaquo;</span>
+                        </button>
+
+                        <button class="menu-row" id="tutorialBtn" type="button">
+                            <span class="menu-ico">
+                                <img src="../assets/Icons/questionmark.png" alt="">
+                            </span>
+                            <span class="menu-text">
+                                <b>How to play</b>
+                                <small>A guided tour, with a practice round</small>
+                            </span>
+                            <span class="menu-go" aria-hidden="true">&rsaquo;</span>
+                        </button>
+
+                        <button class="menu-row" data-scene="settings" type="button">
+                            <span class="menu-ico">
+                                <img src="../assets/Icons/settings.png" alt="">
+                            </span>
+                            <span class="menu-text">
+                                <b>Settings</b>
+                                <small>Audio, gameplay, controls and privacy</small>
+                            </span>
+                            <span class="menu-go" aria-hidden="true">&rsaquo;</span>
+                        </button>
+
+                        <button class="menu-row" id="creditsRow" type="button">
+                            <span class="menu-ico">
+                                <img src="../assets/Icons/favorite.png" alt="">
+                            </span>
+                            <span class="menu-text">
+                                <b>Credits</b>
+                                <small>Who made this, and what it is made of</small>
+                            </span>
+                            <span class="menu-go" aria-hidden="true">&rsaquo;</span>
+                        </button>
+
+                    </nav>
+
+                </div>
 
             </div>
 
         </section>
-
 
         <!-- =========================
              MODE SELECT
@@ -560,7 +624,7 @@
                 </div>
 
                 <div class="winner-mascot">
-                    <img src="../assets/mascot.png" alt="Voicy">
+                    <img src="../assets/Mascot.png" alt="Voicy">
                 </div>
 
                 <span class="winner-tag">Round winner</span>
@@ -619,12 +683,12 @@
                     </label>
 
                     <div class="field">
-                        <span>Images</span>
+                        <span>Images <b id="packCount">0</b></span>
                         <div class="upload-row">
-                            <button class="upload" type="button">
-                                <b>＋</b><span>Add image</span><small>PNG / JPG / WEBP</small>
+                            <button class="upload" id="packUpload" type="button">
+                                <b>＋</b><span>Add image</span><small>Drop files in</small>
                             </button>
-                            <div class="thumbs">
+                            <div class="thumbs" id="packThumbs">
                                 <div class="thumb art-1">◕‿◕</div>
                                 <div class="thumb art-2">WHAT.</div>
                                 <div class="thumb art-3">◕‿◕</div>
@@ -663,20 +727,127 @@
                 <p class="sub-copy">Everything you have made, published or not.</p>
             </div>
 
-            <div class="library">
+            <div class="library" id="myPackList"></div>
 
-                <div class="lib-row panel">
-                    <div class="lib-art art-1">◕‿◕</div>
-                    <div class="lib-info"><b>Unhinged Internet</b><small>Published · 243 plays · 18 images</small></div>
-                    <span class="badge badge-live">Live</span>
-                    <button class="btn btn-ghost btn-sm" type="button"><span>Manage</span></button>
+        </section>
+
+
+        <!-- =========================
+             ONBOARDING
+
+             The steps themselves live in the dialogue box at the
+             bottom of the screen - the same one Voicy talks through
+             the rest of the app. What is here is only the outline:
+             a heading and the list of steps, so the whole tour is
+             visible at a glance while the box drives you through it.
+        ========================== -->
+
+        <section id="tour" class="scene">
+
+            <div class="tour-head">
+                <button class="back-btn" data-scene="hub" type="button">
+                    <img src="../assets/Icons/home.png" alt="">Back
+                </button>
+                <h2 class="sub-title">Getting started</h2>
+                <p class="sub-copy">
+                    Ten short steps. Voicy will take you to each thing and
+                    wait while you use it. There is a practice round in the
+                    middle - nobody is listening and nothing is scored.
+                </p>
+            </div>
+
+            <div class="tour-rail" id="tourRail">
+                <ol class="tour-steps" id="tourSteps"></ol>
+            </div>
+
+        </section>
+
+        <!-- =========================
+             PRACTICE ROUND
+             A real round with nobody else in it. Same microphone,
+             same recorder, same speech to text, no timer and no vote.
+             Nothing is scored and nothing is kept.
+        ========================== -->
+
+        <section id="practice" class="scene">
+
+            <div class="practice-head">
+                <button class="back-btn" id="practiceBack" type="button">
+                    <img src="../assets/Icons/home.png" alt="">Back
+                </button>
+                <div class="practice-head-text">
+                    <h2 class="sub-title">Practice round</h2>
+                    <p class="sub-copy">
+                        Just you. No timer, no vote, no score, and nothing
+                        is kept afterwards. Say whatever comes to mind.
+                    </p>
+                </div>
+                <span class="practice-tag">Not recorded</span>
+            </div>
+
+            <div class="practice-grid">
+
+                <div class="practice-art panel">
+                    <div class="prompt-art-sky"></div>
+                    <div class="prompt-art-figure" id="practiceFigure">◕‿◕</div>
                 </div>
 
-                <div class="lib-row panel">
-                    <div class="lib-art art-2">WHAT.</div>
-                    <div class="lib-info"><b>Funny Screenshots</b><small>Draft · 0 plays · 7 images</small></div>
-                    <span class="badge badge-draft">Draft</span>
-                    <button class="btn btn-ghost btn-sm" type="button"><span>Edit</span></button>
+                <div class="practice-side panel">
+
+                    <div class="practice-status">
+                        <span class="practice-dot" id="practiceDot"></span>
+                        <b id="practiceStatus">Ready when you are</b>
+                    </div>
+
+                    <!-- dictation: your own voice, typed out live.
+                         this uses the browser engine, which listens to
+                         the live stream - so unlike a finished recording
+                         it needs no endpoint at all -->
+                    <div class="practice-dictate">
+                        <div class="practice-dictate-head">
+                            <b>Dictation</b>
+                            <span class="practice-privacy">audio goes to
+                                the browser's cloud recogniser</span>
+                        </div>
+
+                        <div class="practice-transcript" id="practiceTranscript">
+                            <span class="practice-placeholder">
+                                Press Dictate and just talk. The words appear
+                                here as you say them.
+                            </span>
+                        </div>
+
+                        <div class="practice-meter" aria-hidden="true">
+                            <i id="practiceMeter"></i>
+                        </div>
+
+                        <p class="practice-mic" id="practiceMic">
+                            Mic check runs while you dictate.
+                        </p>
+
+                        <div class="practice-actions">
+                            <button class="btn btn-primary" id="practiceDictate"
+                                type="button">
+                                <span>Dictate</span>
+                            </button>
+                            <button class="btn btn-ghost" id="practiceRecord"
+                                type="button">
+                                <span>Record instead</span>
+                            </button>
+                            <button class="btn btn-ghost" id="practiceRedo"
+                                type="button">
+                                <span>New image</span>
+                            </button>
+                        </div>
+
+                        <p class="practice-note" id="practiceNote">
+                            Dictation is live, so it works with no setup. If
+                            the words do not come back, the level meter and
+                            the mic verdict above will tell you whether the
+                            microphone is the problem or the recogniser is.
+                        </p>
+                    </div>
+
                 </div>
 
             </div>
@@ -685,44 +856,666 @@
 
 
         <!-- =========================
-             GUIDE
+             SETTINGS - one scrolling page
         ========================== -->
 
-        <section id="tutorial" class="scene">
+        <section id="settings" class="scene">
 
             <div class="sub-head">
                 <button class="back-btn" data-scene="hub" type="button">
                     <img src="../assets/Icons/home.png" alt="">Back
                 </button>
-                <h2 class="sub-title">How to play</h2>
-                <p class="sub-copy">Four steps, then you are in.</p>
+                <h2 class="sub-title">Settings</h2>
+                <p class="sub-copy">
+                    Microphone, speech to text, privacy, audio, gameplay,
+                    controls and interface. All of it here, all of it saved
+                    on this machine.
+                </p>
             </div>
 
-            <div class="guide">
+            <div class="settings-layout">
 
-                <div class="guide-visual panel">
-                    <img src="../assets/mascot.png" alt="Voicy">
-                    <div class="guide-say">
-                        <b>Voicy</b>
-                        <span id="tutorialLine">Welcome to Caption Chaos.</span>
+                <nav class="settings-nav" id="settingsNav">
+                    <a href="#set-microphone" class="on">Microphone</a>
+                    <a href="#set-voice">Voice to text</a>
+                    <a href="#set-privacy">Privacy</a>
+                    <a href="#set-audio">Audio</a>
+                    <a href="#set-gameplay">Gameplay</a>
+                    <a href="#set-controls">Controls</a>
+                    <a href="#set-interface">Interface</a>
+                    <a href="#set-account">Account</a>
+                </nav>
+
+                <div class="settings-body">
+
+                    <!-- ---------- MICROPHONE ---------- -->
+
+                    <section class="set-block" id="set-microphone">
+                        <h3 class="set-title">Microphone</h3>
+                        <p class="set-lede">
+                            Pick the input, set the levels, then check you
+                            can hear yourself.
+                        </p>
+
+                        <div class="set-cols">
+                            <div class="panel set-card">
+                                <div class="panel-head">
+                                    <span class="panel-title">Input device</span>
+                                    <button class="mini-btn" id="rescanDevices" type="button">Rescan</button>
+                                </div>
+                                <div class="device-list" id="inputList"></div>
+
+                                <div class="field-group">
+                                    <span class="field-label">Output device</span>
+                                    <div class="device-list" id="outputList"></div>
+                                </div>
+                            </div>
+
+                            <div class="panel set-card">
+                                <div class="panel-head">
+                                    <span class="panel-title">Level</span>
+                                    <span class="tag-pill" id="meterState">Idle</span>
+                                </div>
+
+                                <div class="vu">
+                                    <div class="vu-track">
+                                        <i class="vu-fill" id="vuFill"></i>
+                                        <i class="vu-peak" id="vuPeak"></i>
+                                        <span class="vu-mark" style="left:72%"></span>
+                                        <span class="vu-mark" style="left:88%"></span>
+                                    </div>
+                                    <div class="vu-scale">
+                                        <span>-60</span><span>-36</span><span>-18</span>
+                                        <span>-12</span><span>-6</span><span>0</span>
+                                    </div>
+                                </div>
+
+                                <div class="readout">
+                                    <div><small>Level</small><b id="dbNow">-inf</b></div>
+                                    <div><small>Peak</small><b id="dbPeak">-inf</b></div>
+                                    <div><small>Noise floor</small><b id="dbFloor">-inf</b></div>
+                                </div>
+
+                                <div class="knob-row">
+                                    <button class="toggle" id="monitorEcho" type="button"></button>
+                                    <div>
+                                        <b>Hear yourself</b>
+                                        <small>Routes your mic to the speakers</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- the whole mic test: record it, play it back -->
+                        <div class="panel set-card">
+                            <div class="panel-head">
+                                <span class="panel-title">Mic test</span>
+                                <span class="tag-pill">Record and play back</span>
+                            </div>
+
+                            <div class="mic-test">
+                                <div class="mic-test-meter">
+                                    <div class="vu-track">
+                                        <i class="vu-fill" id="testVuFill"></i>
+                                    </div>
+                                    <small id="testVuLabel">Ready when you are</small>
+                                </div>
+
+                                <div class="mic-test-buttons">
+                                    <button class="btn btn-primary btn-sm" id="micTestRecord" type="button">
+                                        <span>Record 5s</span>
+                                    </button>
+                                    <button class="btn btn-ghost btn-sm" id="micTestStop" type="button">
+                                        <span>Stop</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="ab-wrap hidden" id="abWrap">
+                                <span class="field-label">That is you</span>
+                                <audio id="abAudio" controls preload="metadata"></audio>
+                            </div>
+
+                            <div class="set-cols set-cols-tight">
+                                <div class="field-group">
+                                    <span class="field-label">Input gain <b id="gainValue">0 dB</b></span>
+                                    <input type="range" id="micGain" min="-20" max="20" step="1" value="0">
+                                </div>
+                                <div class="field-group">
+                                    <span class="field-label">Noise gate <b id="gateValue">-50 dB</b></span>
+                                    <input type="range" id="noiseGate" min="-70" max="-20" step="1" value="-50">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ---------- VOICE TO TEXT ---------- -->
+
+                    <section class="set-block" id="set-voice">
+                        <h3 class="set-title">Voice to text</h3>
+                        <p class="set-lede">
+                            The game turns your recording into a caption.
+                            Try the engine here before you rely on it in a
+                            round, and see exactly what leaves your machine.
+                        </p>
+
+                        <div class="panel set-card">
+                            <div class="panel-head">
+                                <span class="panel-title">Engine</span>
+                                <span class="tag-pill" id="sttStatus">Checking…</span>
+                            </div>
+
+                            <div class="set-cols set-cols-tight">
+                                <label class="field">
+                                    <span>Transcription engine</span>
+                                    <select class="mini-select" id="sttEngine"></select>
+                                </label>
+
+                                <label class="field hidden" id="sttEndpointField">
+                                    <span>Endpoint URL</span>
+                                    <input type="text" id="sttEndpoint" placeholder="https://your-server/v1/transcribe">
+                                </label>
+                            </div>
+
+                            <div class="stt-bar">
+                                <button class="btn btn-primary btn-sm" id="sttRecord" type="button">
+                                    <span>Record and transcribe</span>
+                                </button>
+                                <button class="btn btn-ghost btn-sm" id="sttStop" type="button">
+                                    <span>Stop</span>
+                                </button>
+                                <span class="stt-latency" id="sttLatency"></span>
+                            </div>
+
+                            <div class="stt-out">
+                                <span class="field-label">Caption text</span>
+                                <textarea id="sttText" rows="3" class="stt-textarea"
+                                    placeholder="Your caption will appear here."></textarea>
+                            </div>
+
+                            <div class="stt-actions">
+                                <button class="btn btn-ghost btn-sm" id="sttCopy" type="button">
+                                    <span>Copy</span>
+                                </button>
+                                <button class="btn btn-ghost btn-sm" id="sttClear" type="button">
+                                    <span>Clear</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ---------- PRIVACY ---------- -->
+
+                    <section class="set-block" id="set-privacy">
+                        <h3 class="set-title">Privacy and anonymity</h3>
+                        <p class="set-lede">
+                            Submissions are anonymous to the room. These are
+                            the switches that keep it that way, and the one
+                            place a caption can still leak.
+                        </p>
+
+                        <div class="panel set-card">
+                            <div class="anon-status" id="anonStatus">
+                                <span class="anon-dot"></span>
+                                <div>
+                                    <b id="anonHeadline">Transcript only</b>
+                                    <small id="anonDetail">Audio never leaves the device</small>
+                                </div>
+                            </div>
+
+                            <div class="setting">
+                                <div>
+                                    <b>Share transcript, not audio</b>
+                                    <small>Other players see words, never your voice.</small>
+                                </div>
+                                <button class="toggle on" data-set="anonTranscript" type="button"></button>
+                            </div>
+
+                            <div class="setting">
+                                <div>
+                                    <b>New anonymous handle each round</b>
+                                    <small>Stops a player linking round one to round five.</small>
+                                </div>
+                                <button class="toggle on" data-set="anonRotate" type="button"></button>
+                            </div>
+
+                            <div class="setting">
+                                <div>
+                                    <b>Voiceprint guard</b>
+                                    <small>Flags captions that sound like one you already submitted.</small>
+                                </div>
+                                <button class="toggle on" data-set="anonGuard" type="button"></button>
+                            </div>
+
+                            <div class="setting">
+                                <div>
+                                    <b>Wipe local buffer on exit</b>
+                                    <small>Clears drafts, drafts of captions and the mic test.</small>
+                                </div>
+                                <button class="toggle on" data-set="anonWipe" type="button"></button>
+                            </div>
+
+                            <div class="anon-note">
+                                <b>Where a caption can still leak</b>
+                                <p>
+                                    A cloud transcription engine receives your
+                                    audio, so it - not you - is the only party
+                                    that never hears it. An on-device engine
+                                    keeps that promise. Voiceprints are the
+                                    other hole: two captions in the same room
+                                    from the same throat can be matched by
+                                    ear. The guard above checks for that, but
+                                    it is a warning, not a wall.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ---------- AUDIO ---------- -->
+
+                    <section class="set-block" id="set-audio">
+                        <h3 class="set-title">Audio</h3>
+                        <p class="set-lede">What the app plays back to you.</p>
+
+                        <div class="panel set-card">
+                            <div class="setting">
+                                <div><b>Voicy voice</b><small>Play Voicy's recorded lines.</small></div>
+                                <button class="toggle on" data-set="voice" type="button"></button>
+                            </div>
+                            <div class="setting">
+                                <div><b>Master volume</b><small>Everything the app plays.</small></div>
+                                <input class="mini-range" type="range" data-set="master" min="0" max="100" value="80">
+                            </div>
+                            <div class="setting">
+                                <div><b>Typewriter blips</b><small>Soft tone per character as Voicy talks.</small></div>
+                                <button class="toggle on" data-set="blips" type="button"></button>
+                            </div>
+                            <div class="setting">
+                                <div><b>Interface sounds</b><small>Clicks and confirmations.</small></div>
+                                <button class="toggle on" data-set="uiSfx" type="button"></button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ---------- GAMEPLAY ---------- -->
+
+                    <section class="set-block" id="set-gameplay">
+                        <h3 class="set-title">Gameplay</h3>
+                        <p class="set-lede">How a round behaves by default.</p>
+
+                        <div class="panel set-card">
+                            <div class="setting">
+                                <div><b>Default difficulty</b><small>Pre-selected when you open New round.</small></div>
+                                <select class="mini-select" data-set="defaultDiff"></select>
+                            </div>
+                            <div class="setting">
+                                <div><b>Default mode</b><small>Classic, Blitz, Turn or Custom.</small></div>
+                                <select class="mini-select" data-set="defaultMode"></select>
+                            </div>
+                            <div class="setting">
+                                <div><b>Countdown before a round</b><small>Three, two, one, speak.</small></div>
+                                <button class="toggle on" data-set="countdown" type="button"></button>
+                            </div>
+                            <div class="setting">
+                                <div><b>Timer warnings</b><small>Flash the clock in the last five seconds.</small></div>
+                                <button class="toggle on" data-set="timerWarn" type="button"></button>
+                            </div>
+                            <div class="setting">
+                                <div><b>Anonymous by default</b><small>Submissions hide who said what.</small></div>
+                                <button class="toggle on" data-set="anonDefault" type="button"></button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ---------- CONTROLS ---------- -->
+
+                    <section class="set-block" id="set-controls">
+                        <h3 class="set-title">Controls</h3>
+                        <p class="set-lede">
+                            Click a key to rebind it. They work everywhere
+                            except while you are typing in a field.
+                        </p>
+
+                        <div class="panel set-card">
+                            <div class="keybinds" id="keybinds"></div>
+                            <div class="stt-actions">
+                                <button class="btn btn-ghost btn-sm" id="resetKeys" type="button">
+                                    <span>Reset keys</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ---------- INTERFACE ---------- -->
+
+                    <section class="set-block" id="set-interface">
+                        <h3 class="set-title">Interface</h3>
+                        <p class="set-lede">Motion, the background and sizing.</p>
+
+                        <div class="panel set-card">
+                            <div class="setting">
+                                <div><b>Reduced motion</b><small>Cut particles and screen effects.</small></div>
+                                <button class="toggle" data-set="calm" type="button"></button>
+                            </div>
+                            <div class="setting">
+                                <div><b>Background video</b><small>Play the nature loop behind the app.</small></div>
+                                <button class="toggle on" data-set="backdrop" type="button"></button>
+                            </div>
+                            <div class="setting">
+                                <div><b>Particles</b><small>Soft drifting motes.</small></div>
+                                <button class="toggle on" data-set="particles" type="button"></button>
+                            </div>
+                            <div class="setting">
+                                <div><b>Interface scale</b><small>Size of text and controls.</small></div>
+                                <input class="mini-range" type="range" data-set="scale" min="85" max="115" value="100">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ---------- ACCOUNT ---------- -->
+
+                    <section class="set-block" id="set-account">
+                        <h3 class="set-title">Account</h3>
+                        <p class="set-lede">Your profile and the reset button.</p>
+
+                        <div class="panel set-card">
+                            <div class="account-row">
+                                <img class="account-avatar" src="../assets/Mascot.png" alt="">
+                                <div>
+                                    <b id="accountName">Guest</b>
+                                    <small id="accountState">Playing locally</small>
+                                </div>
+                            </div>
+                            <div class="setting">
+                                <div><b>Link Discord</b><small>Show your status and display name.</small></div>
+                                <button class="btn btn-ghost btn-sm" id="settingsDiscord" type="button"><span>Connect</span></button>
+                            </div>
+                            <div class="setting">
+                                <div><b>Reset all settings</b><small>Puts everything back to defaults.</small></div>
+                                <button class="btn btn-ghost btn-sm" id="resetSettings" type="button"><span>Reset</span></button>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             PROFILE
+        ========================== -->
+
+        <section id="profile" class="scene">
+
+            <!-- ---------- read view ---------- -->
+
+            <div id="profileView">
+
+                <div class="profile-hero panel">
+                    <div class="profile-banner" id="profileBanner"></div>
+
+                    <div class="profile-id">
+                        <div class="profile-avatar-lg" id="profileAvatar">
+                            <img src="../assets/Mascot.png" alt="">
+                        </div>
+
+                        <div class="profile-name-block">
+                            <h2 class="profile-name" id="profileName">Guest</h2>
+                            <div class="profile-meta" id="profileMeta">
+                                <span id="profileHandle">@guest</span>
+                                <span id="profilePronouns"></span>
+                                <span id="profileRegion"></span>
+                            </div>
+                            <span class="profile-title" id="profileTitle">Local player</span>
+                        </div>
+
+                        <div class="profile-level">
+                            <small>Level</small>
+                            <b id="profileLevel">1</b>
+                            <div class="xp-track"><i id="profileXp"></i></div>
+                        </div>
+
+                        <button class="btn btn-ghost btn-sm" id="editProfile" type="button">
+                            <span>Edit profile</span>
+                        </button>
                     </div>
                 </div>
 
-                <div class="guide-body">
+                <div class="profile-cols">
 
-                    <div class="lesson-grid">
-                        <div class="lesson"><b>01</b><strong>See</strong><span>An image appears.</span></div>
-                        <div class="lesson"><b>02</b><strong>Speak</strong><span>You have a few seconds.</span></div>
-                        <div class="lesson"><b>03</b><strong>Submit</strong><span>Your voice goes in anonymously.</span></div>
-                        <div class="lesson"><b>04</b><strong>Vote</strong><span>The room picks a winner.</span></div>
+                    <div class="profile-main">
+
+                        <div class="panel set-card">
+                            <div class="panel-head">
+                                <span class="panel-title">About</span>
+                            </div>
+                            <p class="profile-bio" id="profileBio">Nothing here yet.</p>
+                        </div>
+
+                        <div class="panel set-card">
+                            <div class="panel-head">
+                                <span class="panel-title">Statistics</span>
+                                <small>Everything is local to this machine</small>
+                            </div>
+                            <div class="stat-grid" id="statGrid"></div>
+                        </div>
+
+                        <div class="panel set-card">
+                            <div class="panel-head">
+                                <span class="panel-title">Achievements</span>
+                                <small id="achieveSummary">0 of 12 unlocked</small>
+                            </div>
+                            <div class="achieve-grid" id="achieveGrid"></div>
+                        </div>
+
                     </div>
 
-                    <button class="btn btn-primary" id="tutorialNext" type="button">
-                        <span>Next lesson</span><em>→</em>
+                    <div class="profile-side">
+
+                        <div class="panel set-card">
+                            <div class="panel-head">
+                                <span class="panel-title">Recent matches</span>
+                            </div>
+                            <div class="feed" id="matchFeed"></div>
+                        </div>
+
+                        <div class="panel set-card">
+                            <div class="panel-head">
+                                <span class="panel-title">What the room sees</span>
+                            </div>
+                            <div class="anon-note anon-note-flush">
+                                <b>You are not shown</b>
+                                <p id="roomSees">
+                                    Nobody in a round gets your name, your handle or
+                                    your avatar. They hear a recording and a handle
+                                    that changes every round.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- the season table used to be its own scene; it is
+                     player data, so it lives under the stats and badges -->
+
+                <div class="panel set-card standings">
+                    <div class="panel-head">
+                        <span class="panel-title">Standings</span>
+                        <small>Season one, resets Monday</small>
+                    </div>
+
+                    <div class="podium" id="podium"></div>
+
+                    <div class="panel board">
+                        <div class="board-head">
+                            <span>Rank</span><span>Player</span><span>Wins</span>
+                            <span>Win rate</span><span>Score</span>
+                        </div>
+                        <div id="boardRows"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ---------- edit view ---------- -->
+
+            <div id="profileEdit" class="hidden">
+
+                <div class="sub-head">
+                    <h2 class="sub-title">Edit profile</h2>
+                    <p class="sub-copy">
+                        This never leaves your machine. Nothing here is sent
+                        anywhere, and the room still cannot see it.
+                    </p>
+                </div>
+
+                <div class="panel set-card">
+
+                    <div class="set-cols set-cols-tight">
+                        <label class="field">
+                            <span>Name</span>
+                            <input type="text" id="editName" maxlength="24" placeholder="Your name">
+                        </label>
+
+                        <label class="field">
+                            <span>Handle</span>
+                            <input type="text" id="editHandle" maxlength="24" placeholder="@you">
+                        </label>
+                    </div>
+
+                    <label class="field">
+                        <span>Bio <b id="bioCount">0 / 160</b></span>
+                        <textarea id="editBio" rows="3" maxlength="160"
+                            placeholder="Say something about yourself."></textarea>
+                    </label>
+
+                    <div class="set-cols set-cols-tight">
+                        <label class="field">
+                            <span>Pronouns</span>
+                            <input type="text" id="editPronouns" maxlength="24" placeholder="they/them">
+                        </label>
+
+                        <label class="field">
+                            <span>Region</span>
+                            <input type="text" id="editRegion" maxlength="32" placeholder="Europe">
+                        </label>
+                    </div>
+
+                    <label class="field">
+                        <span>Title</span>
+                        <input type="text" id="editTitle" maxlength="40" placeholder="Local player">
+                    </label>
+
+                    <div class="field">
+                        <span>Your own images</span>
+
+                        <div class="uploads">
+
+                            <div class="upload-slot">
+                                <div class="upload-preview" id="pfpPreview">
+                                    <span class="upload-empty">No picture</span>
+                                </div>
+                                <div class="upload-actions">
+                                    <button class="btn btn-ghost btn-sm"
+                                        id="pickPfp" type="button">
+                                        <span>Choose picture</span>
+                                    </button>
+                                    <button class="btn btn-ghost btn-sm hidden"
+                                        id="clearPfp" type="button">
+                                        <span>Remove</span>
+                                    </button>
+                                </div>
+                                <small>Square crop, kept at 256px on this machine.</small>
+                            </div>
+
+                            <div class="upload-slot">
+                                <div class="upload-preview upload-banner" id="bannerPreview">
+                                    <span class="upload-empty">No banner</span>
+                                </div>
+                                <div class="upload-actions">
+                                    <button class="btn btn-ghost btn-sm"
+                                        id="pickBanner" type="button">
+                                        <span>Choose banner</span>
+                                    </button>
+                                    <button class="btn btn-ghost btn-sm hidden"
+                                        id="clearBanner" type="button">
+                                        <span>Remove</span>
+                                    </button>
+                                </div>
+                                <small>Wide crop, kept at 1200&times;280.</small>
+                            </div>
+
+                        </div>
+
+                        <p class="upload-note">
+                            Images are resized in the browser and stored on this
+                            machine only. Nothing is uploaded anywhere, and the
+                            room still never sees them.
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <span>Accent</span>
+                        <div class="swatches" id="swatches"></div>
+                    </div>
+
+                    <div class="field">
+                        <span>Fallback avatar</span>
+                        <div class="swatches" id="avatarChoices"></div>
+                        <small class="field-hint">
+                            Used until you upload a picture of your own.
+                        </small>
+                    </div>
+
+                    <div class="edit-actions">
+                        <button class="btn btn-ghost" id="cancelEdit" type="button">
+                            <span>Cancel</span>
+                        </button>
+                        <button class="btn btn-primary" id="saveProfile" type="button">
+                            <span>Save</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             MATCH SUMMARY
+        ========================== -->
+
+        <section id="summary" class="scene scene-game">
+
+            <div class="winner">
+                <div class="winner-rays"></div>
+                <div class="winner-crest">
+                    <img src="../assets/Icons/trophy.png" alt="">
+                </div>
+
+                <span class="winner-tag">Match complete</span>
+
+                <h2 class="winner-text" id="summaryTitle">You did fine.</h2>
+
+                <div class="summary-grid" id="summaryGrid"></div>
+
+                <div class="winner-actions">
+                    <button class="btn btn-primary" data-scene="modes" type="button">
+                        <span>Play again</span><em>→</em>
                     </button>
-
+                    <button class="btn btn-ghost" data-scene="hub" type="button">
+                        <img class="btn-ico" src="../assets/Icons/home.png" alt="">
+                        <span>Back to hub</span>
+                    </button>
                 </div>
-
             </div>
 
         </section>
@@ -737,7 +1530,7 @@
     <footer class="footbar" id="footbar">
 
         <button class="foot-mascot" id="footMascot" type="button" title="Talk to Voicy">
-            <img src="../assets/mascot.png" alt="Voicy">
+            <img src="../assets/Mascot.png" alt="Voicy">
         </button>
 
         <div class="foot-status">
@@ -751,14 +1544,54 @@
                 Voicy voice <em id="ttsState">On</em>
             </button>
 
-            <div class="profile" id="discordProfile">
-                <img id="discordAvatar" class="profile-avatar" src="../assets/mascot.png" alt="">
+            <div class="account" id="account">
+                <button class="hud-btn accent" id="loginBtn" type="button">
+                    <span class="hud-ico">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20a7.4 7.4 0 0 1 14.4 0"/></svg>
+                    </span>
+                    <span>Sign in</span>
+                </button>
+
+                <div class="login-pop" id="loginPop">
+                    <div class="login-pop-head">
+                        <b>Sign in</b>
+                        <small>Sync your packs across devices</small>
+                    </div>
+
+                    <button class="oauth-btn twitch" id="loginTwitch" type="button">
+                        <svg viewBox="0 0 24 24" class="oauth-ico">
+                            <path d="M4 3h17v11l-5 5h-4l-3 3v-3H4z"/>
+                            <path d="M11 8v4M15.5 8v4" class="stroke"/>
+                        </svg>
+                        <span>Continue with Twitch</span>
+                        <i class="soon">Soon</i>
+                    </button>
+
+                    <button class="oauth-btn gmail" id="loginGoogle" type="button">
+                        <svg viewBox="0 0 24 24" class="oauth-ico">
+                            <path d="M3 6.5h18v11H3z"/>
+                            <path d="m3 7 9 6.5L21 7" class="stroke"/>
+                        </svg>
+                        <span>Continue with Gmail</span>
+                        <i class="soon">Soon</i>
+                    </button>
+
+                    <div class="login-divider"><i>or</i></div>
+
+                    <button class="guest-btn" id="loginGuest" type="button">Play as guest</button>
+
+                    <p class="login-note">Twitch and Gmail sign-in is not connected yet.</p>
+                </div>
+            </div>
+
+            <button class="profile" id="discordProfile" data-scene="profile" type="button">
+                <img id="discordAvatar" class="profile-avatar" src="../assets/Mascot.png" alt="">
                 <div class="profile-info">
                     <b id="discordDisplayName">Not connected</b>
                     <small id="discordUsername">Link Discord</small>
                 </div>
                 <button id="connectDiscordBtn" class="hud-btn accent" type="button">Connect</button>
-            </div>
+            </button>
 
         </div>
 
@@ -770,34 +1603,6 @@
 <!-- =========================================================
      MODALS
 ========================================================= -->
-
-<div class="modal" id="settingsModal" aria-hidden="true">
-    <div class="modal-scrim" data-close></div>
-
-    <div class="modal-card panel">
-        <button class="modal-close" data-close type="button">✕</button>
-
-        <span class="eyebrow">System</span>
-        <h2 class="modal-title">Settings</h2>
-
-        <div class="setting">
-            <div><b>Voicy voice</b><small>Play Voicy's recorded lines. No text-to-speech.</small></div>
-            <button class="toggle on" type="button" aria-label="Toggle Voicy voice"></button>
-        </div>
-
-        <div class="setting">
-            <div><b>Animated interface</b><small>Keep mascot and background motion enabled.</small></div>
-            <button class="toggle on" type="button" aria-label="Toggle animation"></button>
-        </div>
-
-        <div class="setting">
-            <div><b>Reduced motion</b><small>Cut background motion and screen effects.</small></div>
-            <button class="toggle" id="motionToggle" type="button" aria-label="Toggle reduced motion"></button>
-        </div>
-
-    </div>
-</div>
-
 
 <div class="modal" id="creditsModal" aria-hidden="true">
     <div class="modal-scrim" data-close></div>

@@ -1,9 +1,18 @@
 /**
  * Dev helper: screenshot the running Electron renderer over CDP.
  *
- *   node tools/dev-screenshot.js <out.png> [click-selector] [wait-ms]
+ *   node tools/dev-screenshot.cjs <out.png> [click-selector] [wait-ms] [port]
  *
- * Requires the app to be started with --remote-debugging-port=9222
+ * Requires the app to be started with --remote-debugging-port=9222, or
+ * pass a different port as the fourth argument to target another instance
+ * - a packaged build, for example:
+ *
+ *   "Caption Chaos.exe" --remote-debugging-port=9333
+ *   node tools/dev-screenshot.cjs out.png "js:go('profile');" 600 9333
+ *
+ * A packaged instance is the only way to catch an asset path that works
+ * in the source tree but 404s inside the asar, where lookups are
+ * case-sensitive.
  */
 const fs = require('fs');
 const WebSocket = require('ws');
@@ -12,7 +21,7 @@ const out = process.argv[2];
 const clickSelector = process.argv[3] || '';
 const waitMs = Number(process.argv[4] || 2600);
 
-const PORT = 9222;
+const PORT = Number(process.argv[5] || 9222);
 
 async function findTarget() {
   for (let i = 0; i < 40; i++) {
@@ -66,9 +75,35 @@ function send(ws, id, method, params = {}) {
   await send(ws, 1, 'Page.enable');
 
   if (clickSelector) {
-    // "js:<expression>" runs arbitrary JS, anything else is a selector to click
+    // "js:<expression>" runs arbitrary JS, anything else is a selector to click.
+    // "js:@<path>" reads the expression from a file, which is the only
+    // reliable way to pass a multi-line script from PowerShell: $ and
+    // backticks get mangled before Node ever sees them.
     const isJs = clickSelector.startsWith('js:');
+    const fromFile = isJs && clickSelector.startsWith('js:@');
     const target = isJs ? clickSelector.slice(3) : null;
+
+    if (fromFile) {
+      const body = fs.readFileSync(target.slice(1), 'utf8');
+      const result = await send(ws, 2, 'Runtime.evaluate', {
+        expression: `(async () => { ${body} })()`,
+        awaitPromise: true,
+        returnByValue: true,
+      });
+
+      console.log('  ->', JSON.stringify(result.result?.value));
+
+      const shot2 = await send(ws, 3, 'Page.captureScreenshot', {
+        format: 'png',
+        captureBeyondViewport: false,
+      });
+
+      fs.writeFileSync(out, Buffer.from(shot2.data, 'base64'));
+      console.log(`saved ${out} (${(fs.statSync(out).size / 1024).toFixed(0)} KB)`);
+
+      ws.close();
+      process.exit(0);
+    }
 
     const expression = isJs
       ? `(async () => { ${target} })()`
